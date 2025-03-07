@@ -12,6 +12,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// PartialSendAll gets all the partialSend
 func (k Keeper) PartialSendAll(ctx context.Context, req *types.QueryAllPartialSendRequest) (*types.QueryAllPartialSendResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
@@ -39,6 +40,7 @@ func (k Keeper) PartialSendAll(ctx context.Context, req *types.QueryAllPartialSe
 	return &types.QueryAllPartialSendResponse{PartialSend: partialSends, Pagination: pageRes}, nil
 }
 
+// PartialSendByCreator gets partialSend by creator
 func (k Keeper) PartialSendByCreator(ctx context.Context, req *types.QueryGetPartialSendByCreatorRequest) (*types.QueryGetPartialSendByCreatorResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
@@ -67,6 +69,7 @@ func (k Keeper) PartialSendByCreator(ctx context.Context, req *types.QueryGetPar
 	return &types.QueryGetPartialSendByCreatorResponse{PartialSend: partialSends, Pagination: pageRes}, nil
 }
 
+// PartialSend gets the partialSend by creator and id
 func (k Keeper) PartialSend(ctx context.Context, req *types.QueryGetPartialSendRequest) (*types.QueryGetPartialSendResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")

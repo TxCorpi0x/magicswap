@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/TxCorpi0x/magicswap/testutil/sample"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/stretchr/testify/require"
 )
@@ -23,7 +24,9 @@ func TestMsgPartialSend_ValidateBasic(t *testing.T) {
 		}, {
 			name: "valid address",
 			msg: MsgPartialSend{
-				Creator: sample.AccAddress(),
+				Creator:   sample.AccAddress(),
+				Recipient: sample.AccAddress(),
+				Amount:    sdk.NewInt64Coin("stake", 100),
 			},
 		},
 	}
