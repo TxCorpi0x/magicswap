@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package magicswap.swap;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "magicswap/swap/params.proto";
+import "magicswap/swap/partial_send.proto";
+
+option go_package = "github.com/TxCorpi0x/magicswap/x/swap/types";
+
+// GenesisState defines the swap module's genesis state.
+message GenesisState {
+  
+  // params defines all the parameters of the module.
+           Params      params           = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+  repeated PartialSend partialSendList  = 2 [(gogoproto.nullable) = false] ;
+           uint64      partialSendCount = 3;
+}
+

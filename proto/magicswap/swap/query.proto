@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package magicswap.swap;
+
+import "amino/amino.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "magicswap/swap/params.proto";
+import "magicswap/swap/partial_send.proto";
+
+option go_package = "github.com/TxCorpi0x/magicswap/x/swap/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  
+  // Parameters queries the parameters of the module.
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/TxCorpi0x/magicswap/swap/params";
+  
+  }
+  
+  // Queries a list of PartialSend items.
+  rpc PartialSend    (QueryGetPartialSendRequest) returns (QueryGetPartialSendResponse) {
+    option (google.api.http).get = "/TxCorpi0x/magicswap/swap/partial_send/{id}";
+  
+  }
+  rpc PartialSendAll (QueryAllPartialSendRequest) returns (QueryAllPartialSendResponse) {
+    option (google.api.http).get = "/TxCorpi0x/magicswap/swap/partial_send";
+  
+  }
+}
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false, (amino.dont_omitempty) = true];
+}
+
+message QueryGetPartialSendRequest {
+  uint64 id = 1;
+}
+
+message QueryGetPartialSendResponse {
+  PartialSend PartialSend = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllPartialSendRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPartialSendResponse {
+  repeated PartialSend                            PartialSend = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+

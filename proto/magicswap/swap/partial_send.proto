@@ -1,0 +1,14 @@
+syntax = "proto3";
+package magicswap.swap;
+
+option go_package = "github.com/TxCorpi0x/magicswap/x/swap/types";
+import "gogoproto/gogo.proto"; 
+import "cosmos/base/v1beta1/coin.proto"; 
+
+message PartialSend {
+  uint64 id = 1;
+  string recipient = 2; 
+  cosmos.base.v1beta1.Coin sentAmount = 3 [(gogoproto.nullable) = false]; 
+  cosmos.base.v1beta1.Coin swappedAmount = 4 [(gogoproto.nullable) = false]; 
+  string creator = 5;
+}
