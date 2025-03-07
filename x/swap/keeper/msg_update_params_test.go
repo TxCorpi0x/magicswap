@@ -3,6 +3,7 @@ package keeper_test
 import (
 	"testing"
 
+	"cosmossdk.io/math"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 
@@ -32,18 +33,79 @@ func TestMsgUpdateParams(t *testing.T) {
 			expErrMsg: "invalid authority",
 		},
 		{
-			name: "send enabled param",
+			name: "invalid ratio",
 			input: &types.MsgUpdateParams{
 				Authority: k.GetAuthority(),
-				Params:    types.Params{},
+				Params: types.Params{
+					SwapRules: []types.SwapRule{
+						{
+							SrcDenom:            "stake",
+							DstDenom:            "stake1",
+							Ratio:               math.LegacyNewDecWithPrec(-1, 2), // invalid ratio
+							MinSupplyRatioLimit: types.DefaultMinSupplyRatioLimit,
+						},
+					},
+				},
 			},
-			expErr: false,
+			expErr:    true,
+			expErrMsg: "ratio must be between 0 and 1",
+		},
+		{
+			name: "invalid min supply ratio limit",
+			input: &types.MsgUpdateParams{
+				Authority: k.GetAuthority(),
+				Params: types.Params{
+					SwapRules: []types.SwapRule{
+						{
+							SrcDenom:            "stake",
+							DstDenom:            "stake1",
+							Ratio:               types.DefaultRatio,
+							MinSupplyRatioLimit: math.LegacyNewDecWithPrec(-1, 2), // invalid min supply ratio limit
+						},
+					},
+				},
+			},
+			expErr:    true,
+			expErrMsg: "min supply ratio limit must be between 0 and 1",
+		},
+		{
+			name: "duplicate src and dst token pair",
+			input: &types.MsgUpdateParams{
+				Authority: k.GetAuthority(),
+				Params: types.Params{
+					SwapRules: []types.SwapRule{
+						{
+							SrcDenom:            "stake",
+							DstDenom:            "stake1",
+							Ratio:               types.DefaultRatio,
+							MinSupplyRatioLimit: types.DefaultMinSupplyRatioLimit,
+						},
+						{
+							SrcDenom:            "stake",
+							DstDenom:            "stake2",
+							Ratio:               types.DefaultRatio,
+							MinSupplyRatioLimit: types.DefaultMinSupplyRatioLimit,
+						},
+					},
+				},
+			},
+			expErr:    true,
+			expErrMsg: "duplicate src and dst token pair found",
 		},
 		{
 			name: "all good",
 			input: &types.MsgUpdateParams{
 				Authority: k.GetAuthority(),
-				Params:    params,
+				Params: types.Params{
+					SwapRules: []types.SwapRule{
+						{
+							SrcDenom:            "stake",
+							DstDenom:            "stake1",
+							Ratio:               types.DefaultRatio,
+							MinSupplyRatioLimit: types.DefaultMinSupplyRatioLimit,
+						},
+					},
+				},
 			},
 			expErr: false,
 		},
