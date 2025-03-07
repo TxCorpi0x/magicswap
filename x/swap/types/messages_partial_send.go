@@ -21,5 +21,15 @@ func (msg *MsgPartialSend) ValidateBasic() error {
 	if err != nil {
 		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
+
+	_, err = sdk.AccAddressFromBech32(msg.Recipient)
+	if err != nil {
+		return errorsmod.Wrapf(sdkerrors.ErrInvalidAddress, "invalid recipient address (%s)", err)
+	}
+
+	if !msg.Amount.IsPositive() {
+		return errorsmod.Wrap(sdkerrors.ErrInvalidRequest, "amount cannot be zero or negative")
+	}
+
 	return nil
 }

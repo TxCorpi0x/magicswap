@@ -808,13 +808,15 @@ func (x *fastReflection_QueryParamsResponse) ProtoMethods() *protoiface.Methods 
 }
 
 var (
-	md_QueryGetPartialSendRequest    protoreflect.MessageDescriptor
-	fd_QueryGetPartialSendRequest_id protoreflect.FieldDescriptor
+	md_QueryGetPartialSendRequest         protoreflect.MessageDescriptor
+	fd_QueryGetPartialSendRequest_creator protoreflect.FieldDescriptor
+	fd_QueryGetPartialSendRequest_id      protoreflect.FieldDescriptor
 )
 
 func init() {
 	file_magicswap_swap_query_proto_init()
 	md_QueryGetPartialSendRequest = File_magicswap_swap_query_proto.Messages().ByName("QueryGetPartialSendRequest")
+	fd_QueryGetPartialSendRequest_creator = md_QueryGetPartialSendRequest.Fields().ByName("creator")
 	fd_QueryGetPartialSendRequest_id = md_QueryGetPartialSendRequest.Fields().ByName("id")
 }
 
@@ -883,6 +885,12 @@ func (x *fastReflection_QueryGetPartialSendRequest) Interface() protoreflect.Pro
 // While iterating, mutating operations may only be performed
 // on the current field descriptor.
 func (x *fastReflection_QueryGetPartialSendRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Creator != "" {
+		value := protoreflect.ValueOfString(x.Creator)
+		if !f(fd_QueryGetPartialSendRequest_creator, value) {
+			return
+		}
+	}
 	if x.Id != uint64(0) {
 		value := protoreflect.ValueOfUint64(x.Id)
 		if !f(fd_QueryGetPartialSendRequest_id, value) {
@@ -904,6 +912,8 @@ func (x *fastReflection_QueryGetPartialSendRequest) Range(f func(protoreflect.Fi
 // a repeated field is populated if it is non-empty.
 func (x *fastReflection_QueryGetPartialSendRequest) Has(fd protoreflect.FieldDescriptor) bool {
 	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendRequest.creator":
+		return x.Creator != ""
 	case "magicswap.swap.QueryGetPartialSendRequest.id":
 		return x.Id != uint64(0)
 	default:
@@ -922,6 +932,8 @@ func (x *fastReflection_QueryGetPartialSendRequest) Has(fd protoreflect.FieldDes
 // Clear is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryGetPartialSendRequest) Clear(fd protoreflect.FieldDescriptor) {
 	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendRequest.creator":
+		x.Creator = ""
 	case "magicswap.swap.QueryGetPartialSendRequest.id":
 		x.Id = uint64(0)
 	default:
@@ -940,6 +952,9 @@ func (x *fastReflection_QueryGetPartialSendRequest) Clear(fd protoreflect.FieldD
 // of the value; to obtain a mutable reference, use Mutable.
 func (x *fastReflection_QueryGetPartialSendRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
 	switch descriptor.FullName() {
+	case "magicswap.swap.QueryGetPartialSendRequest.creator":
+		value := x.Creator
+		return protoreflect.ValueOfString(value)
 	case "magicswap.swap.QueryGetPartialSendRequest.id":
 		value := x.Id
 		return protoreflect.ValueOfUint64(value)
@@ -963,6 +978,8 @@ func (x *fastReflection_QueryGetPartialSendRequest) Get(descriptor protoreflect.
 // Set is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryGetPartialSendRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
 	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendRequest.creator":
+		x.Creator = value.Interface().(string)
 	case "magicswap.swap.QueryGetPartialSendRequest.id":
 		x.Id = value.Uint()
 	default:
@@ -985,6 +1002,8 @@ func (x *fastReflection_QueryGetPartialSendRequest) Set(fd protoreflect.FieldDes
 // Mutable is a mutating operation and unsafe for concurrent use.
 func (x *fastReflection_QueryGetPartialSendRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendRequest.creator":
+		panic(fmt.Errorf("field creator of message magicswap.swap.QueryGetPartialSendRequest is not mutable"))
 	case "magicswap.swap.QueryGetPartialSendRequest.id":
 		panic(fmt.Errorf("field id of message magicswap.swap.QueryGetPartialSendRequest is not mutable"))
 	default:
@@ -1000,6 +1019,8 @@ func (x *fastReflection_QueryGetPartialSendRequest) Mutable(fd protoreflect.Fiel
 // For lists, maps, and messages, this returns a new, empty, mutable value.
 func (x *fastReflection_QueryGetPartialSendRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
 	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendRequest.creator":
+		return protoreflect.ValueOfString("")
 	case "magicswap.swap.QueryGetPartialSendRequest.id":
 		return protoreflect.ValueOfUint64(uint64(0))
 	default:
@@ -1071,6 +1092,10 @@ func (x *fastReflection_QueryGetPartialSendRequest) ProtoMethods() *protoiface.M
 		var n int
 		var l int
 		_ = l
+		l = len(x.Creator)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
 		if x.Id != 0 {
 			n += 1 + runtime.Sov(uint64(x.Id))
 		}
@@ -1106,7 +1131,14 @@ func (x *fastReflection_QueryGetPartialSendRequest) ProtoMethods() *protoiface.M
 		if x.Id != 0 {
 			i = runtime.EncodeVarint(dAtA, i, uint64(x.Id))
 			i--
-			dAtA[i] = 0x8
+			dAtA[i] = 0x10
+		}
+		if len(x.Creator) > 0 {
+			i -= len(x.Creator)
+			copy(dAtA[i:], x.Creator)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
+			i--
+			dAtA[i] = 0xa
 		}
 		if input.Buf != nil {
 			input.Buf = append(input.Buf, dAtA...)
@@ -1158,6 +1190,38 @@ func (x *fastReflection_QueryGetPartialSendRequest) ProtoMethods() *protoiface.M
 			}
 			switch fieldNum {
 			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Creator = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
 				if wireType != 0 {
 					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 				}
@@ -1647,6 +1711,1078 @@ func (x *fastReflection_QueryGetPartialSendResponse) ProtoMethods() *protoiface.
 }
 
 var (
+	md_QueryGetPartialSendByCreatorRequest            protoreflect.MessageDescriptor
+	fd_QueryGetPartialSendByCreatorRequest_creator    protoreflect.FieldDescriptor
+	fd_QueryGetPartialSendByCreatorRequest_pagination protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_magicswap_swap_query_proto_init()
+	md_QueryGetPartialSendByCreatorRequest = File_magicswap_swap_query_proto.Messages().ByName("QueryGetPartialSendByCreatorRequest")
+	fd_QueryGetPartialSendByCreatorRequest_creator = md_QueryGetPartialSendByCreatorRequest.Fields().ByName("creator")
+	fd_QueryGetPartialSendByCreatorRequest_pagination = md_QueryGetPartialSendByCreatorRequest.Fields().ByName("pagination")
+}
+
+var _ protoreflect.Message = (*fastReflection_QueryGetPartialSendByCreatorRequest)(nil)
+
+type fastReflection_QueryGetPartialSendByCreatorRequest QueryGetPartialSendByCreatorRequest
+
+func (x *QueryGetPartialSendByCreatorRequest) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryGetPartialSendByCreatorRequest)(x)
+}
+
+func (x *QueryGetPartialSendByCreatorRequest) slowProtoReflect() protoreflect.Message {
+	mi := &file_magicswap_swap_query_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_QueryGetPartialSendByCreatorRequest_messageType fastReflection_QueryGetPartialSendByCreatorRequest_messageType
+var _ protoreflect.MessageType = fastReflection_QueryGetPartialSendByCreatorRequest_messageType{}
+
+type fastReflection_QueryGetPartialSendByCreatorRequest_messageType struct{}
+
+func (x fastReflection_QueryGetPartialSendByCreatorRequest_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryGetPartialSendByCreatorRequest)(nil)
+}
+func (x fastReflection_QueryGetPartialSendByCreatorRequest_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryGetPartialSendByCreatorRequest)
+}
+func (x fastReflection_QueryGetPartialSendByCreatorRequest_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryGetPartialSendByCreatorRequest
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryGetPartialSendByCreatorRequest
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Type() protoreflect.MessageType {
+	return _fastReflection_QueryGetPartialSendByCreatorRequest_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) New() protoreflect.Message {
+	return new(fastReflection_QueryGetPartialSendByCreatorRequest)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Interface() protoreflect.ProtoMessage {
+	return (*QueryGetPartialSendByCreatorRequest)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if x.Creator != "" {
+		value := protoreflect.ValueOfString(x.Creator)
+		if !f(fd_QueryGetPartialSendByCreatorRequest_creator, value) {
+			return
+		}
+	}
+	if x.Pagination != nil {
+		value := protoreflect.ValueOfMessage(x.Pagination.ProtoReflect())
+		if !f(fd_QueryGetPartialSendByCreatorRequest_pagination, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.creator":
+		return x.Creator != ""
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.pagination":
+		return x.Pagination != nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorRequest"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.creator":
+		x.Creator = ""
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.pagination":
+		x.Pagination = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorRequest"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.creator":
+		value := x.Creator
+		return protoreflect.ValueOfString(value)
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.pagination":
+		value := x.Pagination
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorRequest"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorRequest does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.creator":
+		x.Creator = value.Interface().(string)
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.pagination":
+		x.Pagination = value.Message().Interface().(*v1beta1.PageRequest)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorRequest"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.pagination":
+		if x.Pagination == nil {
+			x.Pagination = new(v1beta1.PageRequest)
+		}
+		return protoreflect.ValueOfMessage(x.Pagination.ProtoReflect())
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.creator":
+		panic(fmt.Errorf("field creator of message magicswap.swap.QueryGetPartialSendByCreatorRequest is not mutable"))
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorRequest"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.creator":
+		return protoreflect.ValueOfString("")
+	case "magicswap.swap.QueryGetPartialSendByCreatorRequest.pagination":
+		m := new(v1beta1.PageRequest)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorRequest"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorRequest does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in magicswap.swap.QueryGetPartialSendByCreatorRequest", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_QueryGetPartialSendByCreatorRequest) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*QueryGetPartialSendByCreatorRequest)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		l = len(x.Creator)
+		if l > 0 {
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.Pagination != nil {
+			l = options.Size(x.Pagination)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*QueryGetPartialSendByCreatorRequest)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Pagination != nil {
+			encoded, err := options.Marshal(x.Pagination)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.Creator) > 0 {
+			i -= len(x.Creator)
+			copy(dAtA[i:], x.Creator)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(x.Creator)))
+			i--
+			dAtA[i] = 0xa
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*QueryGetPartialSendByCreatorRequest)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryGetPartialSendByCreatorRequest: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryGetPartialSendByCreatorRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+				}
+				var stringLen uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					stringLen |= uint64(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				intStringLen := int(stringLen)
+				if intStringLen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + intStringLen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.Creator = string(dAtA[iNdEx:postIndex])
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Pagination == nil {
+					x.Pagination = &v1beta1.PageRequest{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Pagination); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var _ protoreflect.List = (*_QueryGetPartialSendByCreatorResponse_1_list)(nil)
+
+type _QueryGetPartialSendByCreatorResponse_1_list struct {
+	list *[]*PartialSend
+}
+
+func (x *_QueryGetPartialSendByCreatorResponse_1_list) Len() int {
+	if x.list == nil {
+		return 0
+	}
+	return len(*x.list)
+}
+
+func (x *_QueryGetPartialSendByCreatorResponse_1_list) Get(i int) protoreflect.Value {
+	return protoreflect.ValueOfMessage((*x.list)[i].ProtoReflect())
+}
+
+func (x *_QueryGetPartialSendByCreatorResponse_1_list) Set(i int, value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*PartialSend)
+	(*x.list)[i] = concreteValue
+}
+
+func (x *_QueryGetPartialSendByCreatorResponse_1_list) Append(value protoreflect.Value) {
+	valueUnwrapped := value.Message()
+	concreteValue := valueUnwrapped.Interface().(*PartialSend)
+	*x.list = append(*x.list, concreteValue)
+}
+
+func (x *_QueryGetPartialSendByCreatorResponse_1_list) AppendMutable() protoreflect.Value {
+	v := new(PartialSend)
+	*x.list = append(*x.list, v)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_QueryGetPartialSendByCreatorResponse_1_list) Truncate(n int) {
+	for i := n; i < len(*x.list); i++ {
+		(*x.list)[i] = nil
+	}
+	*x.list = (*x.list)[:n]
+}
+
+func (x *_QueryGetPartialSendByCreatorResponse_1_list) NewElement() protoreflect.Value {
+	v := new(PartialSend)
+	return protoreflect.ValueOfMessage(v.ProtoReflect())
+}
+
+func (x *_QueryGetPartialSendByCreatorResponse_1_list) IsValid() bool {
+	return x.list != nil
+}
+
+var (
+	md_QueryGetPartialSendByCreatorResponse             protoreflect.MessageDescriptor
+	fd_QueryGetPartialSendByCreatorResponse_PartialSend protoreflect.FieldDescriptor
+	fd_QueryGetPartialSendByCreatorResponse_pagination  protoreflect.FieldDescriptor
+)
+
+func init() {
+	file_magicswap_swap_query_proto_init()
+	md_QueryGetPartialSendByCreatorResponse = File_magicswap_swap_query_proto.Messages().ByName("QueryGetPartialSendByCreatorResponse")
+	fd_QueryGetPartialSendByCreatorResponse_PartialSend = md_QueryGetPartialSendByCreatorResponse.Fields().ByName("PartialSend")
+	fd_QueryGetPartialSendByCreatorResponse_pagination = md_QueryGetPartialSendByCreatorResponse.Fields().ByName("pagination")
+}
+
+var _ protoreflect.Message = (*fastReflection_QueryGetPartialSendByCreatorResponse)(nil)
+
+type fastReflection_QueryGetPartialSendByCreatorResponse QueryGetPartialSendByCreatorResponse
+
+func (x *QueryGetPartialSendByCreatorResponse) ProtoReflect() protoreflect.Message {
+	return (*fastReflection_QueryGetPartialSendByCreatorResponse)(x)
+}
+
+func (x *QueryGetPartialSendByCreatorResponse) slowProtoReflect() protoreflect.Message {
+	mi := &file_magicswap_swap_query_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+var _fastReflection_QueryGetPartialSendByCreatorResponse_messageType fastReflection_QueryGetPartialSendByCreatorResponse_messageType
+var _ protoreflect.MessageType = fastReflection_QueryGetPartialSendByCreatorResponse_messageType{}
+
+type fastReflection_QueryGetPartialSendByCreatorResponse_messageType struct{}
+
+func (x fastReflection_QueryGetPartialSendByCreatorResponse_messageType) Zero() protoreflect.Message {
+	return (*fastReflection_QueryGetPartialSendByCreatorResponse)(nil)
+}
+func (x fastReflection_QueryGetPartialSendByCreatorResponse_messageType) New() protoreflect.Message {
+	return new(fastReflection_QueryGetPartialSendByCreatorResponse)
+}
+func (x fastReflection_QueryGetPartialSendByCreatorResponse_messageType) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryGetPartialSendByCreatorResponse
+}
+
+// Descriptor returns message descriptor, which contains only the protobuf
+// type information for the message.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Descriptor() protoreflect.MessageDescriptor {
+	return md_QueryGetPartialSendByCreatorResponse
+}
+
+// Type returns the message type, which encapsulates both Go and protobuf
+// type information. If the Go type information is not needed,
+// it is recommended that the message descriptor be used instead.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Type() protoreflect.MessageType {
+	return _fastReflection_QueryGetPartialSendByCreatorResponse_messageType
+}
+
+// New returns a newly allocated and mutable empty message.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) New() protoreflect.Message {
+	return new(fastReflection_QueryGetPartialSendByCreatorResponse)
+}
+
+// Interface unwraps the message reflection interface and
+// returns the underlying ProtoMessage interface.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Interface() protoreflect.ProtoMessage {
+	return (*QueryGetPartialSendByCreatorResponse)(x)
+}
+
+// Range iterates over every populated field in an undefined order,
+// calling f for each field descriptor and value encountered.
+// Range returns immediately if f returns false.
+// While iterating, mutating operations may only be performed
+// on the current field descriptor.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Range(f func(protoreflect.FieldDescriptor, protoreflect.Value) bool) {
+	if len(x.PartialSend) != 0 {
+		value := protoreflect.ValueOfList(&_QueryGetPartialSendByCreatorResponse_1_list{list: &x.PartialSend})
+		if !f(fd_QueryGetPartialSendByCreatorResponse_PartialSend, value) {
+			return
+		}
+	}
+	if x.Pagination != nil {
+		value := protoreflect.ValueOfMessage(x.Pagination.ProtoReflect())
+		if !f(fd_QueryGetPartialSendByCreatorResponse_pagination, value) {
+			return
+		}
+	}
+}
+
+// Has reports whether a field is populated.
+//
+// Some fields have the property of nullability where it is possible to
+// distinguish between the default value of a field and whether the field
+// was explicitly populated with the default value. Singular message fields,
+// member fields of a oneof, and proto2 scalar fields are nullable. Such
+// fields are populated only if explicitly set.
+//
+// In other cases (aside from the nullable cases above),
+// a proto3 scalar field is populated if it contains a non-zero value, and
+// a repeated field is populated if it is non-empty.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Has(fd protoreflect.FieldDescriptor) bool {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.PartialSend":
+		return len(x.PartialSend) != 0
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.pagination":
+		return x.Pagination != nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorResponse"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Clear clears the field such that a subsequent Has call reports false.
+//
+// Clearing an extension field clears both the extension type and value
+// associated with the given field number.
+//
+// Clear is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Clear(fd protoreflect.FieldDescriptor) {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.PartialSend":
+		x.PartialSend = nil
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.pagination":
+		x.Pagination = nil
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorResponse"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Get retrieves the value for a field.
+//
+// For unpopulated scalars, it returns the default value, where
+// the default value of a bytes scalar is guaranteed to be a copy.
+// For unpopulated composite types, it returns an empty, read-only view
+// of the value; to obtain a mutable reference, use Mutable.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Get(descriptor protoreflect.FieldDescriptor) protoreflect.Value {
+	switch descriptor.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.PartialSend":
+		if len(x.PartialSend) == 0 {
+			return protoreflect.ValueOfList(&_QueryGetPartialSendByCreatorResponse_1_list{})
+		}
+		listValue := &_QueryGetPartialSendByCreatorResponse_1_list{list: &x.PartialSend}
+		return protoreflect.ValueOfList(listValue)
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.pagination":
+		value := x.Pagination
+		return protoreflect.ValueOfMessage(value.ProtoReflect())
+	default:
+		if descriptor.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorResponse"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorResponse does not contain field %s", descriptor.FullName()))
+	}
+}
+
+// Set stores the value for a field.
+//
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType.
+// When setting a composite type, it is unspecified whether the stored value
+// aliases the source's memory in any way. If the composite value is an
+// empty, read-only value, then it panics.
+//
+// Set is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Set(fd protoreflect.FieldDescriptor, value protoreflect.Value) {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.PartialSend":
+		lv := value.List()
+		clv := lv.(*_QueryGetPartialSendByCreatorResponse_1_list)
+		x.PartialSend = *clv.list
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.pagination":
+		x.Pagination = value.Message().Interface().(*v1beta1.PageResponse)
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorResponse"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// Mutable returns a mutable reference to a composite type.
+//
+// If the field is unpopulated, it may allocate a composite value.
+// For a field belonging to a oneof, it implicitly clears any other field
+// that may be currently set within the same oneof.
+// For extension fields, it implicitly stores the provided ExtensionType
+// if not already stored.
+// It panics if the field does not contain a composite type.
+//
+// Mutable is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) Mutable(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.PartialSend":
+		if x.PartialSend == nil {
+			x.PartialSend = []*PartialSend{}
+		}
+		value := &_QueryGetPartialSendByCreatorResponse_1_list{list: &x.PartialSend}
+		return protoreflect.ValueOfList(value)
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.pagination":
+		if x.Pagination == nil {
+			x.Pagination = new(v1beta1.PageResponse)
+		}
+		return protoreflect.ValueOfMessage(x.Pagination.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorResponse"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// NewField returns a new value that is assignable to the field
+// for the given descriptor. For scalars, this returns the default value.
+// For lists, maps, and messages, this returns a new, empty, mutable value.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) NewField(fd protoreflect.FieldDescriptor) protoreflect.Value {
+	switch fd.FullName() {
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.PartialSend":
+		list := []*PartialSend{}
+		return protoreflect.ValueOfList(&_QueryGetPartialSendByCreatorResponse_1_list{list: &list})
+	case "magicswap.swap.QueryGetPartialSendByCreatorResponse.pagination":
+		m := new(v1beta1.PageResponse)
+		return protoreflect.ValueOfMessage(m.ProtoReflect())
+	default:
+		if fd.IsExtension() {
+			panic(fmt.Errorf("proto3 declared messages do not support extensions: magicswap.swap.QueryGetPartialSendByCreatorResponse"))
+		}
+		panic(fmt.Errorf("message magicswap.swap.QueryGetPartialSendByCreatorResponse does not contain field %s", fd.FullName()))
+	}
+}
+
+// WhichOneof reports which field within the oneof is populated,
+// returning nil if none are populated.
+// It panics if the oneof descriptor does not belong to this message.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) WhichOneof(d protoreflect.OneofDescriptor) protoreflect.FieldDescriptor {
+	switch d.FullName() {
+	default:
+		panic(fmt.Errorf("%s is not a oneof field in magicswap.swap.QueryGetPartialSendByCreatorResponse", d.FullName()))
+	}
+	panic("unreachable")
+}
+
+// GetUnknown retrieves the entire list of unknown fields.
+// The caller may only mutate the contents of the RawFields
+// if the mutated bytes are stored back into the message with SetUnknown.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) GetUnknown() protoreflect.RawFields {
+	return x.unknownFields
+}
+
+// SetUnknown stores an entire list of unknown fields.
+// The raw fields must be syntactically valid according to the wire format.
+// An implementation may panic if this is not the case.
+// Once stored, the caller must not mutate the content of the RawFields.
+// An empty RawFields may be passed to clear the fields.
+//
+// SetUnknown is a mutating operation and unsafe for concurrent use.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) SetUnknown(fields protoreflect.RawFields) {
+	x.unknownFields = fields
+}
+
+// IsValid reports whether the message is valid.
+//
+// An invalid message is an empty, read-only value.
+//
+// An invalid message often corresponds to a nil pointer of the concrete
+// message type, but the details are implementation dependent.
+// Validity is not part of the protobuf data model, and may not
+// be preserved in marshaling or other operations.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) IsValid() bool {
+	return x != nil
+}
+
+// ProtoMethods returns optional fastReflectionFeature-path implementations of various operations.
+// This method may return nil.
+//
+// The returned methods type is identical to
+// "google.golang.org/protobuf/runtime/protoiface".Methods.
+// Consult the protoiface package documentation for details.
+func (x *fastReflection_QueryGetPartialSendByCreatorResponse) ProtoMethods() *protoiface.Methods {
+	size := func(input protoiface.SizeInput) protoiface.SizeOutput {
+		x := input.Message.Interface().(*QueryGetPartialSendByCreatorResponse)
+		if x == nil {
+			return protoiface.SizeOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Size:              0,
+			}
+		}
+		options := runtime.SizeInputToOptions(input)
+		_ = options
+		var n int
+		var l int
+		_ = l
+		if len(x.PartialSend) > 0 {
+			for _, e := range x.PartialSend {
+				l = options.Size(e)
+				n += 1 + l + runtime.Sov(uint64(l))
+			}
+		}
+		if x.Pagination != nil {
+			l = options.Size(x.Pagination)
+			n += 1 + l + runtime.Sov(uint64(l))
+		}
+		if x.unknownFields != nil {
+			n += len(x.unknownFields)
+		}
+		return protoiface.SizeOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Size:              n,
+		}
+	}
+
+	marshal := func(input protoiface.MarshalInput) (protoiface.MarshalOutput, error) {
+		x := input.Message.Interface().(*QueryGetPartialSendByCreatorResponse)
+		if x == nil {
+			return protoiface.MarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Buf:               input.Buf,
+			}, nil
+		}
+		options := runtime.MarshalInputToOptions(input)
+		_ = options
+		size := options.Size(x)
+		dAtA := make([]byte, size)
+		i := len(dAtA)
+		_ = i
+		var l int
+		_ = l
+		if x.unknownFields != nil {
+			i -= len(x.unknownFields)
+			copy(dAtA[i:], x.unknownFields)
+		}
+		if x.Pagination != nil {
+			encoded, err := options.Marshal(x.Pagination)
+			if err != nil {
+				return protoiface.MarshalOutput{
+					NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+					Buf:               input.Buf,
+				}, err
+			}
+			i -= len(encoded)
+			copy(dAtA[i:], encoded)
+			i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+			i--
+			dAtA[i] = 0x12
+		}
+		if len(x.PartialSend) > 0 {
+			for iNdEx := len(x.PartialSend) - 1; iNdEx >= 0; iNdEx-- {
+				encoded, err := options.Marshal(x.PartialSend[iNdEx])
+				if err != nil {
+					return protoiface.MarshalOutput{
+						NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+						Buf:               input.Buf,
+					}, err
+				}
+				i -= len(encoded)
+				copy(dAtA[i:], encoded)
+				i = runtime.EncodeVarint(dAtA, i, uint64(len(encoded)))
+				i--
+				dAtA[i] = 0xa
+			}
+		}
+		if input.Buf != nil {
+			input.Buf = append(input.Buf, dAtA...)
+		} else {
+			input.Buf = dAtA
+		}
+		return protoiface.MarshalOutput{
+			NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+			Buf:               input.Buf,
+		}, nil
+	}
+	unmarshal := func(input protoiface.UnmarshalInput) (protoiface.UnmarshalOutput, error) {
+		x := input.Message.Interface().(*QueryGetPartialSendByCreatorResponse)
+		if x == nil {
+			return protoiface.UnmarshalOutput{
+				NoUnkeyedLiterals: input.NoUnkeyedLiterals,
+				Flags:             input.Flags,
+			}, nil
+		}
+		options := runtime.UnmarshalInputToOptions(input)
+		_ = options
+		dAtA := input.Buf
+		l := len(dAtA)
+		iNdEx := 0
+		for iNdEx < l {
+			preIndex := iNdEx
+			var wire uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+				}
+				if iNdEx >= l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				wire |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			fieldNum := int32(wire >> 3)
+			wireType := int(wire & 0x7)
+			if wireType == 4 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryGetPartialSendByCreatorResponse: wiretype end group for non-group")
+			}
+			if fieldNum <= 0 {
+				return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: QueryGetPartialSendByCreatorResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+			}
+			switch fieldNum {
+			case 1:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field PartialSend", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				x.PartialSend = append(x.PartialSend, &PartialSend{})
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.PartialSend[len(x.PartialSend)-1]); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			case 2:
+				if wireType != 2 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+				}
+				var msglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrIntOverflow
+					}
+					if iNdEx >= l {
+						return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					msglen |= int(b&0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if msglen < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				postIndex := iNdEx + msglen
+				if postIndex < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if postIndex > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if x.Pagination == nil {
+					x.Pagination = &v1beta1.PageResponse{}
+				}
+				if err := options.Unmarshal(dAtA[iNdEx:postIndex], x.Pagination); err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				iNdEx = postIndex
+			default:
+				iNdEx = preIndex
+				skippy, err := runtime.Skip(dAtA[iNdEx:])
+				if err != nil {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, err
+				}
+				if (skippy < 0) || (iNdEx+skippy) < 0 {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, runtime.ErrInvalidLength
+				}
+				if (iNdEx + skippy) > l {
+					return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+				}
+				if !options.DiscardUnknown {
+					x.unknownFields = append(x.unknownFields, dAtA[iNdEx:iNdEx+skippy]...)
+				}
+				iNdEx += skippy
+			}
+		}
+
+		if iNdEx > l {
+			return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, io.ErrUnexpectedEOF
+		}
+		return protoiface.UnmarshalOutput{NoUnkeyedLiterals: input.NoUnkeyedLiterals, Flags: input.Flags}, nil
+	}
+	return &protoiface.Methods{
+		NoUnkeyedLiterals: struct{}{},
+		Flags:             protoiface.SupportMarshalDeterministic | protoiface.SupportUnmarshalDiscardUnknown,
+		Size:              size,
+		Marshal:           marshal,
+		Unmarshal:         unmarshal,
+		Merge:             nil,
+		CheckInitialized:  nil,
+	}
+}
+
+var (
 	md_QueryAllPartialSendRequest            protoreflect.MessageDescriptor
 	fd_QueryAllPartialSendRequest_pagination protoreflect.FieldDescriptor
 )
@@ -1666,7 +2802,7 @@ func (x *QueryAllPartialSendRequest) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QueryAllPartialSendRequest) slowProtoReflect() protoreflect.Message {
-	mi := &file_magicswap_swap_query_proto_msgTypes[4]
+	mi := &file_magicswap_swap_query_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2154,7 +3290,7 @@ func (x *QueryAllPartialSendResponse) ProtoReflect() protoreflect.Message {
 }
 
 func (x *QueryAllPartialSendResponse) slowProtoReflect() protoreflect.Message {
-	mi := &file_magicswap_swap_query_proto_msgTypes[5]
+	mi := &file_magicswap_swap_query_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2736,7 +3872,8 @@ type QueryGetPartialSendRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Id      uint64 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
 }
 
 func (x *QueryGetPartialSendRequest) Reset() {
@@ -2757,6 +3894,13 @@ func (*QueryGetPartialSendRequest) ProtoMessage() {}
 // Deprecated: Use QueryGetPartialSendRequest.ProtoReflect.Descriptor instead.
 func (*QueryGetPartialSendRequest) Descriptor() ([]byte, []int) {
 	return file_magicswap_swap_query_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *QueryGetPartialSendRequest) GetCreator() string {
+	if x != nil {
+		return x.Creator
+	}
+	return ""
 }
 
 func (x *QueryGetPartialSendRequest) GetId() uint64 {
@@ -2801,6 +3945,92 @@ func (x *QueryGetPartialSendResponse) GetPartialSend() *PartialSend {
 	return nil
 }
 
+type QueryGetPartialSendByCreatorRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Creator    string               `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Pagination *v1beta1.PageRequest `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (x *QueryGetPartialSendByCreatorRequest) Reset() {
+	*x = QueryGetPartialSendByCreatorRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_magicswap_swap_query_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QueryGetPartialSendByCreatorRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryGetPartialSendByCreatorRequest) ProtoMessage() {}
+
+// Deprecated: Use QueryGetPartialSendByCreatorRequest.ProtoReflect.Descriptor instead.
+func (*QueryGetPartialSendByCreatorRequest) Descriptor() ([]byte, []int) {
+	return file_magicswap_swap_query_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *QueryGetPartialSendByCreatorRequest) GetCreator() string {
+	if x != nil {
+		return x.Creator
+	}
+	return ""
+}
+
+func (x *QueryGetPartialSendByCreatorRequest) GetPagination() *v1beta1.PageRequest {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+type QueryGetPartialSendByCreatorResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PartialSend []*PartialSend        `protobuf:"bytes,1,rep,name=PartialSend,proto3" json:"PartialSend,omitempty"`
+	Pagination  *v1beta1.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (x *QueryGetPartialSendByCreatorResponse) Reset() {
+	*x = QueryGetPartialSendByCreatorResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_magicswap_swap_query_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *QueryGetPartialSendByCreatorResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryGetPartialSendByCreatorResponse) ProtoMessage() {}
+
+// Deprecated: Use QueryGetPartialSendByCreatorResponse.ProtoReflect.Descriptor instead.
+func (*QueryGetPartialSendByCreatorResponse) Descriptor() ([]byte, []int) {
+	return file_magicswap_swap_query_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *QueryGetPartialSendByCreatorResponse) GetPartialSend() []*PartialSend {
+	if x != nil {
+		return x.PartialSend
+	}
+	return nil
+}
+
+func (x *QueryGetPartialSendByCreatorResponse) GetPagination() *v1beta1.PageResponse {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
 type QueryAllPartialSendRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2812,7 +4042,7 @@ type QueryAllPartialSendRequest struct {
 func (x *QueryAllPartialSendRequest) Reset() {
 	*x = QueryAllPartialSendRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_magicswap_swap_query_proto_msgTypes[4]
+		mi := &file_magicswap_swap_query_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2826,7 +4056,7 @@ func (*QueryAllPartialSendRequest) ProtoMessage() {}
 
 // Deprecated: Use QueryAllPartialSendRequest.ProtoReflect.Descriptor instead.
 func (*QueryAllPartialSendRequest) Descriptor() ([]byte, []int) {
-	return file_magicswap_swap_query_proto_rawDescGZIP(), []int{4}
+	return file_magicswap_swap_query_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *QueryAllPartialSendRequest) GetPagination() *v1beta1.PageRequest {
@@ -2848,7 +4078,7 @@ type QueryAllPartialSendResponse struct {
 func (x *QueryAllPartialSendResponse) Reset() {
 	*x = QueryAllPartialSendResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_magicswap_swap_query_proto_msgTypes[5]
+		mi := &file_magicswap_swap_query_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -2862,7 +4092,7 @@ func (*QueryAllPartialSendResponse) ProtoMessage() {}
 
 // Deprecated: Use QueryAllPartialSendResponse.ProtoReflect.Descriptor instead.
 func (*QueryAllPartialSendResponse) Descriptor() ([]byte, []int) {
-	return file_magicswap_swap_query_proto_rawDescGZIP(), []int{5}
+	return file_magicswap_swap_query_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *QueryAllPartialSendResponse) GetPartialSend() []*PartialSend {
@@ -2902,73 +4132,107 @@ var file_magicswap_swap_query_proto_rawDesc = []byte{
 	0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x16, 0x2e, 0x6d,
 	0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x50, 0x61,
 	0x72, 0x61, 0x6d, 0x73, 0x42, 0x09, 0xc8, 0xde, 0x1f, 0x00, 0xa8, 0xe7, 0xb0, 0x2a, 0x01, 0x52,
-	0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22, 0x2c, 0x0a, 0x1a, 0x51, 0x75, 0x65, 0x72, 0x79,
+	0x06, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x22, 0x46, 0x0a, 0x1a, 0x51, 0x75, 0x65, 0x72, 0x79,
 	0x47, 0x65, 0x74, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
-	0x04, 0x52, 0x02, 0x69, 0x64, 0x22, 0x62, 0x0a, 0x1b, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65,
-	0x74, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x43, 0x0a, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53,
-	0x65, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6d, 0x61, 0x67, 0x69,
-	0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x50, 0x61, 0x72, 0x74, 0x69,
-	0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0b, 0x50, 0x61,
-	0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x22, 0x64, 0x0a, 0x1a, 0x51, 0x75, 0x65,
-	0x72, 0x79, 0x41, 0x6c, 0x6c, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64,
-	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x46, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e,
-	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x63, 0x6f,
-	0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e,
-	0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75,
-	0x65, 0x73, 0x74, 0x52, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22,
-	0xab, 0x01, 0x0a, 0x1b, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x50, 0x61, 0x72, 0x74,
-	0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
-	0x43, 0x0a, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x18, 0x01,
-	0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70,
-	0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e,
-	0x64, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c,
-	0x53, 0x65, 0x6e, 0x64, 0x12, 0x47, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f,
-	0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x76, 0x31, 0x62,
-	0x65, 0x74, 0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x52, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x32, 0xbe, 0x03,
-	0x0a, 0x05, 0x51, 0x75, 0x65, 0x72, 0x79, 0x12, 0x7b, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d,
-	0x73, 0x12, 0x22, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77,
-	0x61, 0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65,
-	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61,
-	0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61,
-	0x6d, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x28, 0x82, 0xd3, 0xe4, 0x93,
-	0x02, 0x22, 0x12, 0x20, 0x2f, 0x54, 0x78, 0x43, 0x6f, 0x72, 0x70, 0x69, 0x30, 0x78, 0x2f, 0x6d,
-	0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x70, 0x61,
-	0x72, 0x61, 0x6d, 0x73, 0x12, 0x9b, 0x01, 0x0a, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c,
-	0x53, 0x65, 0x6e, 0x64, 0x12, 0x2a, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70,
-	0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x50, 0x61,
-	0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
-	0x1a, 0x2b, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61,
-	0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61,
-	0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x33, 0x82,
-	0xd3, 0xe4, 0x93, 0x02, 0x2d, 0x12, 0x2b, 0x2f, 0x54, 0x78, 0x43, 0x6f, 0x72, 0x70, 0x69, 0x30,
-	0x78, 0x2f, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x73, 0x77, 0x61, 0x70,
-	0x2f, 0x70, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x5f, 0x73, 0x65, 0x6e, 0x64, 0x2f, 0x7b, 0x69,
-	0x64, 0x7d, 0x12, 0x99, 0x01, 0x0a, 0x0e, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65,
-	0x6e, 0x64, 0x41, 0x6c, 0x6c, 0x12, 0x2a, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61,
-	0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x50,
-	0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
-	0x74, 0x1a, 0x2b, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77,
-	0x61, 0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x50, 0x61, 0x72, 0x74, 0x69,
-	0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x2e,
-	0x82, 0xd3, 0xe4, 0x93, 0x02, 0x28, 0x12, 0x26, 0x2f, 0x54, 0x78, 0x43, 0x6f, 0x72, 0x70, 0x69,
-	0x30, 0x78, 0x2f, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x73, 0x77, 0x61,
-	0x70, 0x2f, 0x70, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x5f, 0x73, 0x65, 0x6e, 0x64, 0x42, 0xac,
-	0x01, 0x0a, 0x12, 0x63, 0x6f, 0x6d, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70,
-	0x2e, 0x73, 0x77, 0x61, 0x70, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x72, 0x6f, 0x74,
-	0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x12,
+	0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x04, 0x52, 0x02, 0x69, 0x64, 0x22,
+	0x62, 0x0a, 0x1b, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x50, 0x61, 0x72, 0x74, 0x69,
+	0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x43,
+	0x0a, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e,
+	0x73, 0x77, 0x61, 0x70, 0x2e, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64,
+	0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53,
+	0x65, 0x6e, 0x64, 0x22, 0x87, 0x01, 0x0a, 0x23, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74,
+	0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x79, 0x43, 0x72, 0x65,
+	0x61, 0x74, 0x6f, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x07, 0x63,
+	0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x63, 0x72,
+	0x65, 0x61, 0x74, 0x6f, 0x72, 0x12, 0x46, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x63, 0x6f, 0x73, 0x6d,
+	0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x76, 0x31,
+	0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x52, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0xb4, 0x01,
+	0x0a, 0x24, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61,
+	0x6c, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x79, 0x43, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x43, 0x0a, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61,
+	0x6c, 0x53, 0x65, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x6d, 0x61,
+	0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x50, 0x61, 0x72,
+	0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x04, 0xc8, 0xde, 0x1f, 0x00, 0x52, 0x0b,
+	0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x12, 0x47, 0x0a, 0x0a, 0x70,
+	0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32,
+	0x27, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75,
+	0x65, 0x72, 0x79, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x52, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61,
+	0x74, 0x69, 0x6f, 0x6e, 0x22, 0x64, 0x0a, 0x1a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c,
+	0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x46, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x26, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e,
+	0x62, 0x61, 0x73, 0x65, 0x2e, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74,
+	0x61, 0x31, 0x2e, 0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x52, 0x0a,
+	0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x22, 0xab, 0x01, 0x0a, 0x1b, 0x51,
+	0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65,
+	0x6e, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x43, 0x0a, 0x0b, 0x50, 0x61,
+	0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32,
+	0x1b, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70,
+	0x2e, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x04, 0xc8, 0xde,
+	0x1f, 0x00, 0x52, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x12,
+	0x47, 0x0a, 0x0a, 0x70, 0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x27, 0x2e, 0x63, 0x6f, 0x73, 0x6d, 0x6f, 0x73, 0x2e, 0x62, 0x61, 0x73,
+	0x65, 0x2e, 0x71, 0x75, 0x65, 0x72, 0x79, 0x2e, 0x76, 0x31, 0x62, 0x65, 0x74, 0x61, 0x31, 0x2e,
+	0x50, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x52, 0x0a, 0x70, 0x61,
+	0x67, 0x69, 0x6e, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x32, 0x86, 0x05, 0x0a, 0x05, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x12, 0x7b, 0x0a, 0x06, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12, 0x22, 0x2e, 0x6d,
+	0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x51, 0x75,
+	0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x23, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61,
+	0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x28, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x22, 0x12, 0x20, 0x2f,
 	0x54, 0x78, 0x43, 0x6f, 0x72, 0x70, 0x69, 0x30, 0x78, 0x2f, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73,
-	0x77, 0x61, 0x70, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61,
-	0x70, 0x2f, 0x73, 0x77, 0x61, 0x70, 0xa2, 0x02, 0x03, 0x4d, 0x53, 0x58, 0xaa, 0x02, 0x0e, 0x4d,
-	0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x53, 0x77, 0x61, 0x70, 0xca, 0x02, 0x0e,
-	0x4d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x5c, 0x53, 0x77, 0x61, 0x70, 0xe2, 0x02,
-	0x1a, 0x4d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x5c, 0x53, 0x77, 0x61, 0x70, 0x5c,
-	0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02, 0x0f, 0x4d, 0x61,
-	0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x3a, 0x3a, 0x53, 0x77, 0x61, 0x70, 0x62, 0x06, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x77, 0x61, 0x70, 0x2f, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x70, 0x61, 0x72, 0x61, 0x6d, 0x73, 0x12,
+	0xa5, 0x01, 0x0a, 0x0b, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x12,
+	0x2a, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70,
+	0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c,
+	0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x6d, 0x61,
+	0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x51, 0x75, 0x65,
+	0x72, 0x79, 0x47, 0x65, 0x74, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x3d, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x37,
+	0x12, 0x35, 0x2f, 0x54, 0x78, 0x43, 0x6f, 0x72, 0x70, 0x69, 0x30, 0x78, 0x2f, 0x6d, 0x61, 0x67,
+	0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x70, 0x61, 0x72, 0x74,
+	0x69, 0x61, 0x6c, 0x5f, 0x73, 0x65, 0x6e, 0x64, 0x2f, 0x7b, 0x63, 0x72, 0x65, 0x61, 0x74, 0x6f,
+	0x72, 0x7d, 0x2f, 0x7b, 0x69, 0x64, 0x7d, 0x12, 0xbb, 0x01, 0x0a, 0x14, 0x50, 0x61, 0x72, 0x74,
+	0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x79, 0x43, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72,
+	0x12, 0x33, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61,
+	0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61,
+	0x6c, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x79, 0x43, 0x72, 0x65, 0x61, 0x74, 0x6f, 0x72, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x34, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61,
+	0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x47, 0x65, 0x74, 0x50,
+	0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x42, 0x79, 0x43, 0x72, 0x65, 0x61,
+	0x74, 0x6f, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x38, 0x82, 0xd3, 0xe4,
+	0x93, 0x02, 0x32, 0x12, 0x30, 0x2f, 0x54, 0x78, 0x43, 0x6f, 0x72, 0x70, 0x69, 0x30, 0x78, 0x2f,
+	0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x70,
+	0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x5f, 0x73, 0x65, 0x6e, 0x64, 0x2f, 0x7b, 0x63, 0x72, 0x65,
+	0x61, 0x74, 0x6f, 0x72, 0x7d, 0x12, 0x99, 0x01, 0x0a, 0x0e, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61,
+	0x6c, 0x53, 0x65, 0x6e, 0x64, 0x41, 0x6c, 0x6c, 0x12, 0x2a, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63,
+	0x73, 0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41,
+	0x6c, 0x6c, 0x50, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x1a, 0x2b, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70,
+	0x2e, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x51, 0x75, 0x65, 0x72, 0x79, 0x41, 0x6c, 0x6c, 0x50, 0x61,
+	0x72, 0x74, 0x69, 0x61, 0x6c, 0x53, 0x65, 0x6e, 0x64, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x2e, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x28, 0x12, 0x26, 0x2f, 0x54, 0x78, 0x43, 0x6f,
+	0x72, 0x70, 0x69, 0x30, 0x78, 0x2f, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2f,
+	0x73, 0x77, 0x61, 0x70, 0x2f, 0x70, 0x61, 0x72, 0x74, 0x69, 0x61, 0x6c, 0x5f, 0x73, 0x65, 0x6e,
+	0x64, 0x42, 0xac, 0x01, 0x0a, 0x12, 0x63, 0x6f, 0x6d, 0x2e, 0x6d, 0x61, 0x67, 0x69, 0x63, 0x73,
+	0x77, 0x61, 0x70, 0x2e, 0x73, 0x77, 0x61, 0x70, 0x42, 0x0a, 0x51, 0x75, 0x65, 0x72, 0x79, 0x50,
+	0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x31, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x54, 0x78, 0x43, 0x6f, 0x72, 0x70, 0x69, 0x30, 0x78, 0x2f, 0x6d, 0x61, 0x67,
+	0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x6d, 0x61, 0x67, 0x69, 0x63,
+	0x73, 0x77, 0x61, 0x70, 0x2f, 0x73, 0x77, 0x61, 0x70, 0xa2, 0x02, 0x03, 0x4d, 0x53, 0x58, 0xaa,
+	0x02, 0x0e, 0x4d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x2e, 0x53, 0x77, 0x61, 0x70,
+	0xca, 0x02, 0x0e, 0x4d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x5c, 0x53, 0x77, 0x61,
+	0x70, 0xe2, 0x02, 0x1a, 0x4d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x5c, 0x53, 0x77,
+	0x61, 0x70, 0x5c, 0x47, 0x50, 0x42, 0x4d, 0x65, 0x74, 0x61, 0x64, 0x61, 0x74, 0x61, 0xea, 0x02,
+	0x0f, 0x4d, 0x61, 0x67, 0x69, 0x63, 0x73, 0x77, 0x61, 0x70, 0x3a, 0x3a, 0x53, 0x77, 0x61, 0x70,
+	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -2983,36 +4247,43 @@ func file_magicswap_swap_query_proto_rawDescGZIP() []byte {
 	return file_magicswap_swap_query_proto_rawDescData
 }
 
-var file_magicswap_swap_query_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_magicswap_swap_query_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_magicswap_swap_query_proto_goTypes = []interface{}{
-	(*QueryParamsRequest)(nil),          // 0: magicswap.swap.QueryParamsRequest
-	(*QueryParamsResponse)(nil),         // 1: magicswap.swap.QueryParamsResponse
-	(*QueryGetPartialSendRequest)(nil),  // 2: magicswap.swap.QueryGetPartialSendRequest
-	(*QueryGetPartialSendResponse)(nil), // 3: magicswap.swap.QueryGetPartialSendResponse
-	(*QueryAllPartialSendRequest)(nil),  // 4: magicswap.swap.QueryAllPartialSendRequest
-	(*QueryAllPartialSendResponse)(nil), // 5: magicswap.swap.QueryAllPartialSendResponse
-	(*Params)(nil),                      // 6: magicswap.swap.Params
-	(*PartialSend)(nil),                 // 7: magicswap.swap.PartialSend
-	(*v1beta1.PageRequest)(nil),         // 8: cosmos.base.query.v1beta1.PageRequest
-	(*v1beta1.PageResponse)(nil),        // 9: cosmos.base.query.v1beta1.PageResponse
+	(*QueryParamsRequest)(nil),                   // 0: magicswap.swap.QueryParamsRequest
+	(*QueryParamsResponse)(nil),                  // 1: magicswap.swap.QueryParamsResponse
+	(*QueryGetPartialSendRequest)(nil),           // 2: magicswap.swap.QueryGetPartialSendRequest
+	(*QueryGetPartialSendResponse)(nil),          // 3: magicswap.swap.QueryGetPartialSendResponse
+	(*QueryGetPartialSendByCreatorRequest)(nil),  // 4: magicswap.swap.QueryGetPartialSendByCreatorRequest
+	(*QueryGetPartialSendByCreatorResponse)(nil), // 5: magicswap.swap.QueryGetPartialSendByCreatorResponse
+	(*QueryAllPartialSendRequest)(nil),           // 6: magicswap.swap.QueryAllPartialSendRequest
+	(*QueryAllPartialSendResponse)(nil),          // 7: magicswap.swap.QueryAllPartialSendResponse
+	(*Params)(nil),                               // 8: magicswap.swap.Params
+	(*PartialSend)(nil),                          // 9: magicswap.swap.PartialSend
+	(*v1beta1.PageRequest)(nil),                  // 10: cosmos.base.query.v1beta1.PageRequest
+	(*v1beta1.PageResponse)(nil),                 // 11: cosmos.base.query.v1beta1.PageResponse
 }
 var file_magicswap_swap_query_proto_depIdxs = []int32{
-	6, // 0: magicswap.swap.QueryParamsResponse.params:type_name -> magicswap.swap.Params
-	7, // 1: magicswap.swap.QueryGetPartialSendResponse.PartialSend:type_name -> magicswap.swap.PartialSend
-	8, // 2: magicswap.swap.QueryAllPartialSendRequest.pagination:type_name -> cosmos.base.query.v1beta1.PageRequest
-	7, // 3: magicswap.swap.QueryAllPartialSendResponse.PartialSend:type_name -> magicswap.swap.PartialSend
-	9, // 4: magicswap.swap.QueryAllPartialSendResponse.pagination:type_name -> cosmos.base.query.v1beta1.PageResponse
-	0, // 5: magicswap.swap.Query.Params:input_type -> magicswap.swap.QueryParamsRequest
-	2, // 6: magicswap.swap.Query.PartialSend:input_type -> magicswap.swap.QueryGetPartialSendRequest
-	4, // 7: magicswap.swap.Query.PartialSendAll:input_type -> magicswap.swap.QueryAllPartialSendRequest
-	1, // 8: magicswap.swap.Query.Params:output_type -> magicswap.swap.QueryParamsResponse
-	3, // 9: magicswap.swap.Query.PartialSend:output_type -> magicswap.swap.QueryGetPartialSendResponse
-	5, // 10: magicswap.swap.Query.PartialSendAll:output_type -> magicswap.swap.QueryAllPartialSendResponse
-	8, // [8:11] is the sub-list for method output_type
-	5, // [5:8] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	8,  // 0: magicswap.swap.QueryParamsResponse.params:type_name -> magicswap.swap.Params
+	9,  // 1: magicswap.swap.QueryGetPartialSendResponse.PartialSend:type_name -> magicswap.swap.PartialSend
+	10, // 2: magicswap.swap.QueryGetPartialSendByCreatorRequest.pagination:type_name -> cosmos.base.query.v1beta1.PageRequest
+	9,  // 3: magicswap.swap.QueryGetPartialSendByCreatorResponse.PartialSend:type_name -> magicswap.swap.PartialSend
+	11, // 4: magicswap.swap.QueryGetPartialSendByCreatorResponse.pagination:type_name -> cosmos.base.query.v1beta1.PageResponse
+	10, // 5: magicswap.swap.QueryAllPartialSendRequest.pagination:type_name -> cosmos.base.query.v1beta1.PageRequest
+	9,  // 6: magicswap.swap.QueryAllPartialSendResponse.PartialSend:type_name -> magicswap.swap.PartialSend
+	11, // 7: magicswap.swap.QueryAllPartialSendResponse.pagination:type_name -> cosmos.base.query.v1beta1.PageResponse
+	0,  // 8: magicswap.swap.Query.Params:input_type -> magicswap.swap.QueryParamsRequest
+	2,  // 9: magicswap.swap.Query.PartialSend:input_type -> magicswap.swap.QueryGetPartialSendRequest
+	4,  // 10: magicswap.swap.Query.PartialSendByCreator:input_type -> magicswap.swap.QueryGetPartialSendByCreatorRequest
+	6,  // 11: magicswap.swap.Query.PartialSendAll:input_type -> magicswap.swap.QueryAllPartialSendRequest
+	1,  // 12: magicswap.swap.Query.Params:output_type -> magicswap.swap.QueryParamsResponse
+	3,  // 13: magicswap.swap.Query.PartialSend:output_type -> magicswap.swap.QueryGetPartialSendResponse
+	5,  // 14: magicswap.swap.Query.PartialSendByCreator:output_type -> magicswap.swap.QueryGetPartialSendByCreatorResponse
+	7,  // 15: magicswap.swap.Query.PartialSendAll:output_type -> magicswap.swap.QueryAllPartialSendResponse
+	12, // [12:16] is the sub-list for method output_type
+	8,  // [8:12] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_magicswap_swap_query_proto_init() }
@@ -3072,7 +4343,7 @@ func file_magicswap_swap_query_proto_init() {
 			}
 		}
 		file_magicswap_swap_query_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*QueryAllPartialSendRequest); i {
+			switch v := v.(*QueryGetPartialSendByCreatorRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -3084,6 +4355,30 @@ func file_magicswap_swap_query_proto_init() {
 			}
 		}
 		file_magicswap_swap_query_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QueryGetPartialSendByCreatorResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_magicswap_swap_query_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*QueryAllPartialSendRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_magicswap_swap_query_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QueryAllPartialSendResponse); i {
 			case 0:
 				return &v.state
@@ -3102,7 +4397,7 @@ func file_magicswap_swap_query_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_magicswap_swap_query_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

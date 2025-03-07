@@ -19,9 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Query_Params_FullMethodName         = "/magicswap.swap.Query/Params"
-	Query_PartialSend_FullMethodName    = "/magicswap.swap.Query/PartialSend"
-	Query_PartialSendAll_FullMethodName = "/magicswap.swap.Query/PartialSendAll"
+	Query_Params_FullMethodName               = "/magicswap.swap.Query/Params"
+	Query_PartialSend_FullMethodName          = "/magicswap.swap.Query/PartialSend"
+	Query_PartialSendByCreator_FullMethodName = "/magicswap.swap.Query/PartialSendByCreator"
+	Query_PartialSendAll_FullMethodName       = "/magicswap.swap.Query/PartialSendAll"
 )
 
 // QueryClient is the client API for Query service.
@@ -32,6 +33,8 @@ type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	// Queries a list of PartialSend items.
 	PartialSend(ctx context.Context, in *QueryGetPartialSendRequest, opts ...grpc.CallOption) (*QueryGetPartialSendResponse, error)
+	// Queries PartialSend items of an address.
+	PartialSendByCreator(ctx context.Context, in *QueryGetPartialSendByCreatorRequest, opts ...grpc.CallOption) (*QueryGetPartialSendByCreatorResponse, error)
 	PartialSendAll(ctx context.Context, in *QueryAllPartialSendRequest, opts ...grpc.CallOption) (*QueryAllPartialSendResponse, error)
 }
 
@@ -61,6 +64,15 @@ func (c *queryClient) PartialSend(ctx context.Context, in *QueryGetPartialSendRe
 	return out, nil
 }
 
+func (c *queryClient) PartialSendByCreator(ctx context.Context, in *QueryGetPartialSendByCreatorRequest, opts ...grpc.CallOption) (*QueryGetPartialSendByCreatorResponse, error) {
+	out := new(QueryGetPartialSendByCreatorResponse)
+	err := c.cc.Invoke(ctx, Query_PartialSendByCreator_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *queryClient) PartialSendAll(ctx context.Context, in *QueryAllPartialSendRequest, opts ...grpc.CallOption) (*QueryAllPartialSendResponse, error) {
 	out := new(QueryAllPartialSendResponse)
 	err := c.cc.Invoke(ctx, Query_PartialSendAll_FullMethodName, in, out, opts...)
@@ -78,6 +90,8 @@ type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	// Queries a list of PartialSend items.
 	PartialSend(context.Context, *QueryGetPartialSendRequest) (*QueryGetPartialSendResponse, error)
+	// Queries PartialSend items of an address.
+	PartialSendByCreator(context.Context, *QueryGetPartialSendByCreatorRequest) (*QueryGetPartialSendByCreatorResponse, error)
 	PartialSendAll(context.Context, *QueryAllPartialSendRequest) (*QueryAllPartialSendResponse, error)
 	mustEmbedUnimplementedQueryServer()
 }
@@ -91,6 +105,9 @@ func (UnimplementedQueryServer) Params(context.Context, *QueryParamsRequest) (*Q
 }
 func (UnimplementedQueryServer) PartialSend(context.Context, *QueryGetPartialSendRequest) (*QueryGetPartialSendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PartialSend not implemented")
+}
+func (UnimplementedQueryServer) PartialSendByCreator(context.Context, *QueryGetPartialSendByCreatorRequest) (*QueryGetPartialSendByCreatorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PartialSendByCreator not implemented")
 }
 func (UnimplementedQueryServer) PartialSendAll(context.Context, *QueryAllPartialSendRequest) (*QueryAllPartialSendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PartialSendAll not implemented")
@@ -144,6 +161,24 @@ func _Query_PartialSend_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_PartialSendByCreator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetPartialSendByCreatorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).PartialSendByCreator(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Query_PartialSendByCreator_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).PartialSendByCreator(ctx, req.(*QueryGetPartialSendByCreatorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Query_PartialSendAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryAllPartialSendRequest)
 	if err := dec(in); err != nil {
@@ -176,6 +211,10 @@ var Query_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PartialSend",
 			Handler:    _Query_PartialSend_Handler,
+		},
+		{
+			MethodName: "PartialSendByCreator",
+			Handler:    _Query_PartialSendByCreator_Handler,
 		},
 		{
 			MethodName: "PartialSendAll",

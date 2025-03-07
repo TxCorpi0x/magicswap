@@ -1,5 +1,7 @@
 package types
 
+import "encoding/binary"
+
 const (
 	// ModuleName defines the module name
 	ModuleName = "swap"
@@ -15,11 +17,21 @@ var (
 	ParamsKey = []byte("p_swap")
 )
 
-func KeyPrefix(p string) []byte {
-	return []byte(p)
+var (
+	PartialSendKey      = []byte{0x00}
+	PartialSendCountKey = []byte{0x01}
+)
+
+func GetPartialSendPrefix(creator string) []byte {
+	return append(PartialSendKey, []byte(creator)...)
 }
 
-const (
-	PartialSendKey      = "PartialSend/value/"
-	PartialSendCountKey = "PartialSend/count/"
-)
+func GetPartialSendKey(creator string, id uint64) []byte {
+	return append(GetPartialSendPrefix(creator), Uint64ToBytes(id)...)
+}
+
+func Uint64ToBytes(id uint64) []byte {
+	bz := make([]byte, 8)
+	binary.BigEndian.PutUint64(bz, id)
+	return bz
+}

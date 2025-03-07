@@ -23,10 +23,16 @@ func (am AppModule) AutoCLIOptions() *autocliv1.ModuleOptions {
 					Short:     "List all partialSend",
 				},
 				{
+					RpcMethod:      "PartialSendByCreator",
+					Use:            "list-partial-send-by-creator [creator] ",
+					Short:          "Shows all partialSend by a specific creator",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "creator"}},
+				},
+				{
 					RpcMethod:      "PartialSend",
-					Use:            "show-partial-send [id]",
-					Short:          "Shows a partialSend by id",
-					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "id"}},
+					Use:            "show-partial-send [creator] [id]",
+					Short:          "Shows a partialSend by creator and id",
+					PositionalArgs: []*autocliv1.PositionalArgDescriptor{{ProtoField: "creator"}, {ProtoField: "id"}},
 				},
 				// this line is used by ignite scaffolding # autocli/query
 			},

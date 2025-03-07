@@ -14,6 +14,7 @@ import (
 func createNPartialSend(keeper keeper.Keeper, ctx context.Context, n int) []types.PartialSend {
 	items := make([]types.PartialSend, n)
 	for i := range items {
+		items[i].Creator = "creator"
 		items[i].Id = keeper.AppendPartialSend(ctx, items[i])
 	}
 	return items
@@ -23,7 +24,7 @@ func TestPartialSendGet(t *testing.T) {
 	keeper, ctx := keepertest.SwapKeeper(t)
 	items := createNPartialSend(keeper, ctx, 10)
 	for _, item := range items {
-		got, found := keeper.GetPartialSend(ctx, item.Id)
+		got, found := keeper.GetPartialSend(ctx, item.Creator, item.Id)
 		require.True(t, found)
 		require.Equal(t,
 			nullify.Fill(&item),
