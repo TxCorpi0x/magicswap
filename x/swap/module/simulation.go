@@ -23,7 +23,11 @@ var (
 )
 
 const (
-// this line is used by starport scaffolding # simapp/module/const
+	opWeightMsgPartialSend = "op_weight_msg_partial_send"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgPartialSend int = 100
+
+	// this line is used by starport scaffolding # simapp/module/const
 )
 
 // GenerateGenesisState creates a randomized GenState of the module.
@@ -34,6 +38,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 	}
 	swapGenesis := types.GenesisState{
 		Params: types.DefaultParams(),
+		PartialSendList: []types.PartialSend{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		PartialSendCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&swapGenesis)
@@ -46,6 +61,17 @@ func (am AppModule) RegisterStoreDecoder(_ simtypes.StoreDecoderRegistry) {}
 func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
 
+	var weightMsgPartialSend int
+	simState.AppParams.GetOrGenerate(opWeightMsgPartialSend, &weightMsgPartialSend, nil,
+		func(_ *rand.Rand) {
+			weightMsgPartialSend = defaultWeightMsgPartialSend
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgPartialSend,
+		swapsimulation.SimulateMsgPartialSend(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -54,6 +80,14 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 // ProposalMsgs returns msgs used for governance proposals for simulations.
 func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.WeightedProposalMsg {
 	return []simtypes.WeightedProposalMsg{
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgPartialSend,
+			defaultWeightMsgPartialSend,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				swapsimulation.SimulateMsgPartialSend(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
 		// this line is used by starport scaffolding # simapp/module/OpMsg
 	}
 }

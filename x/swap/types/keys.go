@@ -18,3 +18,8 @@ var (
 func KeyPrefix(p string) []byte {
 	return []byte(p)
 }
+
+const (
+	PartialSendKey      = "PartialSend/value/"
+	PartialSendCountKey = "PartialSend/count/"
+)

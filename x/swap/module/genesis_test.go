@@ -14,6 +14,15 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
+		PartialSendList: []types.PartialSend{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		PartialSendCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -25,5 +34,7 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(&genesisState)
 	nullify.Fill(got)
 
+	require.ElementsMatch(t, genesisState.PartialSendList, got.PartialSendList)
+	require.Equal(t, genesisState.PartialSendCount, got.PartialSendCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }
