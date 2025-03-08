@@ -14,8 +14,7 @@ import (
 func (k Keeper) GetPartialSendCount(ctx context.Context) uint64 {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, []byte{})
-	byteKey := types.KeyPrefix(types.PartialSendCountKey)
-	bz := store.Get(byteKey)
+	bz := store.Get(types.PartialSendCountKey)
 
 	// Count doesn't exist: no element
 	if bz == nil {
@@ -30,10 +29,10 @@ func (k Keeper) GetPartialSendCount(ctx context.Context) uint64 {
 func (k Keeper) SetPartialSendCount(ctx context.Context, count uint64) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
 	store := prefix.NewStore(storeAdapter, []byte{})
-	byteKey := types.KeyPrefix(types.PartialSendCountKey)
+	// byteKey := types.KeyPrefix()
 	bz := make([]byte, 8)
 	binary.BigEndian.PutUint64(bz, count)
-	store.Set(byteKey, bz)
+	store.Set(types.PartialSendCountKey, bz)
 }
 
 // AppendPartialSend appends a partialSend in the store with a new id and update the count
@@ -48,9 +47,9 @@ func (k Keeper) AppendPartialSend(
 	partialSend.Id = count
 
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
-	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.PartialSendKey))
+	store := prefix.NewStore(storeAdapter, types.PartialSendKey)
 	appendedValue := k.cdc.MustMarshal(&partialSend)
-	store.Set(GetPartialSendIDBytes(partialSend.Id), appendedValue)
+	store.Set(types.GetPartialSendKey(partialSend.Creator, partialSend.Id), appendedValue)
 
 	// Update partialSend count
 	k.SetPartialSendCount(ctx, count+1)
@@ -61,16 +60,16 @@ func (k Keeper) AppendPartialSend(
 // SetPartialSend set a specific partialSend in the store
 func (k Keeper) SetPartialSend(ctx context.Context, partialSend types.PartialSend) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
-	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.PartialSendKey))
+	store := prefix.NewStore(storeAdapter, types.PartialSendKey)
 	b := k.cdc.MustMarshal(&partialSend)
-	store.Set(GetPartialSendIDBytes(partialSend.Id), b)
+	store.Set(types.GetPartialSendKey(partialSend.Creator, partialSend.Id), b)
 }
 
 // GetPartialSend returns a partialSend from its id
-func (k Keeper) GetPartialSend(ctx context.Context, id uint64) (val types.PartialSend, found bool) {
+func (k Keeper) GetPartialSend(ctx context.Context, creator string, id uint64) (val types.PartialSend, found bool) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
-	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.PartialSendKey))
-	b := store.Get(GetPartialSendIDBytes(id))
+	store := prefix.NewStore(storeAdapter, types.PartialSendKey)
+	b := store.Get(types.GetPartialSendKey(creator, id))
 	if b == nil {
 		return val, false
 	}
@@ -81,7 +80,7 @@ func (k Keeper) GetPartialSend(ctx context.Context, id uint64) (val types.Partia
 // GetAllPartialSend returns all partialSend
 func (k Keeper) GetAllPartialSend(ctx context.Context) (list []types.PartialSend) {
 	storeAdapter := runtime.KVStoreAdapter(k.storeService.OpenKVStore(ctx))
-	store := prefix.NewStore(storeAdapter, types.KeyPrefix(types.PartialSendKey))
+	store := prefix.NewStore(storeAdapter, types.PartialSendKey)
 	iterator := storetypes.KVStorePrefixIterator(store, []byte{})
 
 	defer iterator.Close()
@@ -93,12 +92,4 @@ func (k Keeper) GetAllPartialSend(ctx context.Context) (list []types.PartialSend
 	}
 
 	return
-}
-
-// GetPartialSendIDBytes returns the byte representation of the ID
-func GetPartialSendIDBytes(id uint64) []byte {
-	bz := types.KeyPrefix(types.PartialSendKey)
-	bz = append(bz, []byte("/")...)
-	bz = binary.BigEndian.AppendUint64(bz, id)
-	return bz
 }

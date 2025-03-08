@@ -3,7 +3,9 @@ package types_test
 import (
 	"testing"
 
+	"cosmossdk.io/math"
 	"github.com/TxCorpi0x/magicswap/x/swap/types"
+	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -21,13 +23,23 @@ func TestGenesisState_Validate(t *testing.T) {
 		{
 			desc: "valid genesis state",
 			genState: &types.GenesisState{
-
+				Params: types.DefaultParams(),
 				PartialSendList: []types.PartialSend{
 					{
-						Id: 0,
+						Id:            0,
+						Creator:       "creator",
+						Recipient:     "recipient",
+						BurntAmount:   sdk.NewCoin("stake", math.ZeroInt()),
+						SentAmount:    sdk.NewCoin("stake", math.ZeroInt()),
+						SwappedAmount: sdk.NewCoin("stake", math.ZeroInt()),
 					},
 					{
-						Id: 1,
+						Id:            1,
+						Creator:       "creator1",
+						Recipient:     "recipient1",
+						BurntAmount:   sdk.NewCoin("stake", math.ZeroInt()),
+						SentAmount:    sdk.NewCoin("stake", math.ZeroInt()),
+						SwappedAmount: sdk.NewCoin("stake", math.ZeroInt()),
 					},
 				},
 				PartialSendCount: 2,
@@ -38,6 +50,7 @@ func TestGenesisState_Validate(t *testing.T) {
 		{
 			desc: "duplicated partialSend",
 			genState: &types.GenesisState{
+				Params: types.DefaultParams(),
 				PartialSendList: []types.PartialSend{
 					{
 						Id: 0,

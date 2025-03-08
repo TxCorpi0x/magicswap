@@ -25,17 +25,17 @@ func TestPartialSendQuerySingle(t *testing.T) {
 	}{
 		{
 			desc:     "First",
-			request:  &types.QueryGetPartialSendRequest{Id: msgs[0].Id},
+			request:  &types.QueryGetPartialSendRequest{Creator: msgs[0].Creator, Id: msgs[0].Id},
 			response: &types.QueryGetPartialSendResponse{PartialSend: msgs[0]},
 		},
 		{
 			desc:     "Second",
-			request:  &types.QueryGetPartialSendRequest{Id: msgs[1].Id},
+			request:  &types.QueryGetPartialSendRequest{Creator: msgs[1].Creator, Id: msgs[1].Id},
 			response: &types.QueryGetPartialSendResponse{PartialSend: msgs[1]},
 		},
 		{
 			desc:    "KeyNotFound",
-			request: &types.QueryGetPartialSendRequest{Id: uint64(len(msgs))},
+			request: &types.QueryGetPartialSendRequest{Creator: msgs[0].Creator, Id: uint64(len(msgs))},
 			err:     sdkerrors.ErrKeyNotFound,
 		},
 		{
@@ -110,6 +110,62 @@ func TestPartialSendQueryPaginated(t *testing.T) {
 	})
 	t.Run("InvalidRequest", func(t *testing.T) {
 		_, err := keeper.PartialSendAll(ctx, nil)
+		require.ErrorIs(t, err, status.Error(codes.InvalidArgument, "invalid request"))
+	})
+}
+
+func TestPartialSendByCreatorQueryPaginated(t *testing.T) {
+	keeper, ctx := keepertest.SwapKeeper(t)
+	msgs := createNPartialSend(keeper, ctx, 5)
+
+	request := func(next []byte, offset, limit uint64, total bool) *types.QueryGetPartialSendByCreatorRequest {
+		return &types.QueryGetPartialSendByCreatorRequest{
+			Creator: msgs[0].Creator,
+			Pagination: &query.PageRequest{
+				Key:        next,
+				Offset:     offset,
+				Limit:      limit,
+				CountTotal: total,
+			},
+		}
+	}
+	t.Run("ByOffset", func(t *testing.T) {
+		step := 2
+		for i := 0; i < len(msgs); i += step {
+			resp, err := keeper.PartialSendByCreator(ctx, request(nil, uint64(i), uint64(step), false))
+			require.NoError(t, err)
+			require.LessOrEqual(t, len(resp.PartialSend), step)
+			require.Subset(t,
+				nullify.Fill(msgs),
+				nullify.Fill(resp.PartialSend),
+			)
+		}
+	})
+	t.Run("ByKey", func(t *testing.T) {
+		step := 2
+		var next []byte
+		for i := 0; i < len(msgs); i += step {
+			resp, err := keeper.PartialSendByCreator(ctx, request(next, 0, uint64(step), false))
+			require.NoError(t, err)
+			require.LessOrEqual(t, len(resp.PartialSend), step)
+			require.Subset(t,
+				nullify.Fill(msgs),
+				nullify.Fill(resp.PartialSend),
+			)
+			next = resp.Pagination.NextKey
+		}
+	})
+	t.Run("Total", func(t *testing.T) {
+		resp, err := keeper.PartialSendByCreator(ctx, request(nil, 0, 0, true))
+		require.NoError(t, err)
+		require.Equal(t, len(msgs), int(resp.Pagination.Total))
+		require.ElementsMatch(t,
+			nullify.Fill(msgs),
+			nullify.Fill(resp.PartialSend),
+		)
+	})
+	t.Run("InvalidRequest", func(t *testing.T) {
+		_, err := keeper.PartialSendByCreator(ctx, nil)
 		require.ErrorIs(t, err, status.Error(codes.InvalidArgument, "invalid request"))
 	})
 }

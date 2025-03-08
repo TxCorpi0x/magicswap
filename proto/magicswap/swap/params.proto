@@ -2,6 +2,7 @@ syntax = "proto3";
 package magicswap.swap;
 
 import "amino/amino.proto";
+import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 
 option go_package = "github.com/TxCorpi0x/magicswap/x/swap/types";
@@ -11,5 +12,39 @@ message Params {
   option (amino.name) = "magicswap/x/swap/Params";
   option (gogoproto.equal) = true;
 
-  
+  // SwapRule defines the swap rule constraints.
+  repeated SwapRule swap_rules = 1 [
+    (gogoproto.nullable)     = false,
+    (amino.dont_omitempty)   = true
+  ];
+}
+
+// SwapRule defines the token mapping
+// between the source and destination token.
+message SwapRule {
+  option (amino.name) = "instantswap/x/swap/SwapTokenMapping";
+  option (gogoproto.equal) = true;
+
+  // source denom
+  // the source token to be burned or sent
+  string src_denom = 1;
+  // destination denom
+  // the destination token to be minted
+  string dst_denom = 2;
+  // burn ratio
+  // the ratio of the source token to be burned
+  string ratio = 3 [
+    (cosmos_proto.scalar)  = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable)   = false,
+    (amino.dont_omitempty)   = true
+  ];
+  // minimum supply ratio limit
+  // if the supply ratio is less than this value, the swap will be rejected
+  string min_supply_ratio_limit = 4 [
+    (cosmos_proto.scalar)  = "cosmos.Dec",
+    (gogoproto.customtype) = "cosmossdk.io/math.LegacyDec",
+    (gogoproto.nullable)   = false,
+    (amino.dont_omitempty)   = true
+  ];
 }

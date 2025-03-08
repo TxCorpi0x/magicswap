@@ -22,8 +22,13 @@ service Query {
   
   // Queries a list of PartialSend items.
   rpc PartialSend    (QueryGetPartialSendRequest) returns (QueryGetPartialSendResponse) {
-    option (google.api.http).get = "/TxCorpi0x/magicswap/swap/partial_send/{id}";
-  
+    option (google.api.http).get = "/TxCorpi0x/magicswap/swap/partial_send/{creator}/{id}";
+
+  }
+  // Queries PartialSend items of an address.
+  rpc PartialSendByCreator (QueryGetPartialSendByCreatorRequest) returns (QueryGetPartialSendByCreatorResponse) {
+    option (google.api.http).get = "/TxCorpi0x/magicswap/swap/partial_send/{creator}";
+
   }
   rpc PartialSendAll (QueryAllPartialSendRequest) returns (QueryAllPartialSendResponse) {
     option (google.api.http).get = "/TxCorpi0x/magicswap/swap/partial_send";
@@ -41,12 +46,24 @@ message QueryParamsResponse {
 }
 
 message QueryGetPartialSendRequest {
-  uint64 id = 1;
+  string creator = 1;
+  uint64 id = 2;
 }
 
 message QueryGetPartialSendResponse {
   PartialSend PartialSend = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetPartialSendByCreatorRequest {
+  string creator = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryGetPartialSendByCreatorResponse {
+  repeated PartialSend                            PartialSend = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination  = 2;
+}
+
 
 message QueryAllPartialSendRequest {
   cosmos.base.query.v1beta1.PageRequest pagination = 1;

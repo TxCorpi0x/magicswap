@@ -115,7 +115,8 @@ func (m *QueryParamsResponse) GetParams() Params {
 }
 
 type QueryGetPartialSendRequest struct {
-	Id uint64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Id      uint64 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
 }
 
 func (m *QueryGetPartialSendRequest) Reset()         { *m = QueryGetPartialSendRequest{} }
@@ -150,6 +151,13 @@ func (m *QueryGetPartialSendRequest) XXX_DiscardUnknown() {
 }
 
 var xxx_messageInfo_QueryGetPartialSendRequest proto.InternalMessageInfo
+
+func (m *QueryGetPartialSendRequest) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
 
 func (m *QueryGetPartialSendRequest) GetId() uint64 {
 	if m != nil {
@@ -202,6 +210,110 @@ func (m *QueryGetPartialSendResponse) GetPartialSend() PartialSend {
 	return PartialSend{}
 }
 
+type QueryGetPartialSendByCreatorRequest struct {
+	Creator    string             `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Pagination *query.PageRequest `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryGetPartialSendByCreatorRequest) Reset()         { *m = QueryGetPartialSendByCreatorRequest{} }
+func (m *QueryGetPartialSendByCreatorRequest) String() string { return proto.CompactTextString(m) }
+func (*QueryGetPartialSendByCreatorRequest) ProtoMessage()    {}
+func (*QueryGetPartialSendByCreatorRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_85e682b8cdd5b38b, []int{4}
+}
+func (m *QueryGetPartialSendByCreatorRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetPartialSendByCreatorRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetPartialSendByCreatorRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetPartialSendByCreatorRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetPartialSendByCreatorRequest.Merge(m, src)
+}
+func (m *QueryGetPartialSendByCreatorRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetPartialSendByCreatorRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetPartialSendByCreatorRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetPartialSendByCreatorRequest proto.InternalMessageInfo
+
+func (m *QueryGetPartialSendByCreatorRequest) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *QueryGetPartialSendByCreatorRequest) GetPagination() *query.PageRequest {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type QueryGetPartialSendByCreatorResponse struct {
+	PartialSend []PartialSend       `protobuf:"bytes,1,rep,name=PartialSend,proto3" json:"PartialSend"`
+	Pagination  *query.PageResponse `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+}
+
+func (m *QueryGetPartialSendByCreatorResponse) Reset()         { *m = QueryGetPartialSendByCreatorResponse{} }
+func (m *QueryGetPartialSendByCreatorResponse) String() string { return proto.CompactTextString(m) }
+func (*QueryGetPartialSendByCreatorResponse) ProtoMessage()    {}
+func (*QueryGetPartialSendByCreatorResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_85e682b8cdd5b38b, []int{5}
+}
+func (m *QueryGetPartialSendByCreatorResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *QueryGetPartialSendByCreatorResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_QueryGetPartialSendByCreatorResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *QueryGetPartialSendByCreatorResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryGetPartialSendByCreatorResponse.Merge(m, src)
+}
+func (m *QueryGetPartialSendByCreatorResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *QueryGetPartialSendByCreatorResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_QueryGetPartialSendByCreatorResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_QueryGetPartialSendByCreatorResponse proto.InternalMessageInfo
+
+func (m *QueryGetPartialSendByCreatorResponse) GetPartialSend() []PartialSend {
+	if m != nil {
+		return m.PartialSend
+	}
+	return nil
+}
+
+func (m *QueryGetPartialSendByCreatorResponse) GetPagination() *query.PageResponse {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
 type QueryAllPartialSendRequest struct {
 	Pagination *query.PageRequest `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
@@ -210,7 +322,7 @@ func (m *QueryAllPartialSendRequest) Reset()         { *m = QueryAllPartialSendR
 func (m *QueryAllPartialSendRequest) String() string { return proto.CompactTextString(m) }
 func (*QueryAllPartialSendRequest) ProtoMessage()    {}
 func (*QueryAllPartialSendRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_85e682b8cdd5b38b, []int{4}
+	return fileDescriptor_85e682b8cdd5b38b, []int{6}
 }
 func (m *QueryAllPartialSendRequest) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -255,7 +367,7 @@ func (m *QueryAllPartialSendResponse) Reset()         { *m = QueryAllPartialSend
 func (m *QueryAllPartialSendResponse) String() string { return proto.CompactTextString(m) }
 func (*QueryAllPartialSendResponse) ProtoMessage()    {}
 func (*QueryAllPartialSendResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_85e682b8cdd5b38b, []int{5}
+	return fileDescriptor_85e682b8cdd5b38b, []int{7}
 }
 func (m *QueryAllPartialSendResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -303,6 +415,8 @@ func init() {
 	proto.RegisterType((*QueryParamsResponse)(nil), "magicswap.swap.QueryParamsResponse")
 	proto.RegisterType((*QueryGetPartialSendRequest)(nil), "magicswap.swap.QueryGetPartialSendRequest")
 	proto.RegisterType((*QueryGetPartialSendResponse)(nil), "magicswap.swap.QueryGetPartialSendResponse")
+	proto.RegisterType((*QueryGetPartialSendByCreatorRequest)(nil), "magicswap.swap.QueryGetPartialSendByCreatorRequest")
+	proto.RegisterType((*QueryGetPartialSendByCreatorResponse)(nil), "magicswap.swap.QueryGetPartialSendByCreatorResponse")
 	proto.RegisterType((*QueryAllPartialSendRequest)(nil), "magicswap.swap.QueryAllPartialSendRequest")
 	proto.RegisterType((*QueryAllPartialSendResponse)(nil), "magicswap.swap.QueryAllPartialSendResponse")
 }
@@ -310,40 +424,45 @@ func init() {
 func init() { proto.RegisterFile("magicswap/swap/query.proto", fileDescriptor_85e682b8cdd5b38b) }
 
 var fileDescriptor_85e682b8cdd5b38b = []byte{
-	// 517 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0x41, 0x6f, 0xd3, 0x30,
-	0x14, 0xc7, 0x9b, 0x6e, 0x54, 0xc2, 0x93, 0x2a, 0x61, 0x26, 0x84, 0x52, 0x14, 0x86, 0x91, 0x46,
-	0xd5, 0x82, 0xcd, 0xb6, 0x13, 0xc7, 0x75, 0x82, 0x5d, 0x4b, 0xe0, 0xc4, 0x05, 0x39, 0x8d, 0x15,
-	0x2c, 0x25, 0x71, 0x56, 0xbb, 0xd0, 0x69, 0xe2, 0xc2, 0x27, 0x40, 0xe2, 0x84, 0xf8, 0x02, 0x48,
-	0x5c, 0xf8, 0x04, 0x9c, 0x77, 0x9c, 0xc4, 0x85, 0x13, 0x42, 0x2d, 0x12, 0x5f, 0x03, 0xc5, 0xf6,
-	0x46, 0xda, 0xb9, 0xa3, 0xbb, 0x58, 0x96, 0xfd, 0x7f, 0xff, 0xf7, 0xf3, 0x7b, 0x2f, 0x01, 0x7e,
-	0x46, 0x13, 0x3e, 0x90, 0x6f, 0x68, 0x41, 0xf4, 0x72, 0x30, 0x62, 0xc3, 0x43, 0x5c, 0x0c, 0x85,
-	0x12, 0xb0, 0x79, 0x76, 0x87, 0xcb, 0xc5, 0xbf, 0x46, 0x33, 0x9e, 0x0b, 0xa2, 0x57, 0x23, 0xf1,
-	0xd7, 0x13, 0x91, 0x08, 0xbd, 0x25, 0xe5, 0xce, 0x9e, 0xde, 0x4a, 0x84, 0x48, 0x52, 0x46, 0x68,
-	0xc1, 0x09, 0xcd, 0x73, 0xa1, 0xa8, 0xe2, 0x22, 0x97, 0xf6, 0xb6, 0x33, 0x10, 0x32, 0x13, 0x92,
-	0x44, 0x54, 0x32, 0x93, 0x8f, 0xbc, 0xde, 0x8a, 0x98, 0xa2, 0x5b, 0xa4, 0xa0, 0x09, 0xcf, 0xb5,
-	0xd8, 0x6a, 0x5b, 0x73, 0x78, 0x05, 0x1d, 0xd2, 0xec, 0xd4, 0xe8, 0xce, 0xf9, 0x4b, 0xc5, 0x69,
-	0xfa, 0x52, 0xb2, 0x3c, 0x36, 0x12, 0xb4, 0x0e, 0xe0, 0xd3, 0x32, 0x43, 0x5f, 0xc7, 0x85, 0xec,
-	0x60, 0xc4, 0xa4, 0x42, 0x7d, 0x70, 0x7d, 0xe6, 0x54, 0x16, 0x22, 0x97, 0x0c, 0x3e, 0x02, 0x0d,
-	0xe3, 0x7f, 0xd3, 0xdb, 0xf0, 0xda, 0x6b, 0xdb, 0x37, 0xf0, 0x6c, 0x01, 0xb0, 0xd1, 0xf7, 0xae,
-	0x1e, 0xff, 0xbc, 0x5d, 0xfb, 0xfc, 0xe7, 0x6b, 0xc7, 0x0b, 0x6d, 0x00, 0xba, 0x0f, 0x7c, 0xed,
-	0xb8, 0xcf, 0x54, 0xdf, 0x50, 0x3c, 0x63, 0x79, 0x6c, 0xf3, 0xc1, 0x26, 0xa8, 0xf3, 0x58, 0x9b,
-	0xae, 0x86, 0x75, 0x1e, 0xa3, 0x08, 0xb4, 0x9c, 0x6a, 0xcb, 0xb1, 0x07, 0xd6, 0x2a, 0xc7, 0x16,
-	0xa6, 0xe5, 0x80, 0x39, 0x95, 0xf4, 0x56, 0x4b, 0xa2, 0xb0, 0x1a, 0x85, 0x62, 0x4b, 0xb4, 0x9b,
-	0xa6, 0x0e, 0xa2, 0x27, 0x00, 0xfc, 0xab, 0xb5, 0xcd, 0xb0, 0x89, 0x4d, 0x63, 0x70, 0xd9, 0x18,
-	0x6c, 0x06, 0xc1, 0x36, 0x06, 0xf7, 0x69, 0xc2, 0x6c, 0x6c, 0x58, 0x89, 0x44, 0x5f, 0x3c, 0xfb,
-	0x94, 0xf9, 0x34, 0x8b, 0x9e, 0xb2, 0x72, 0xf9, 0xa7, 0xc0, 0xfd, 0x19, 0xd8, 0xba, 0x86, 0xbd,
-	0xf7, 0x5f, 0x58, 0x43, 0x50, 0xa5, 0xdd, 0xfe, 0xb6, 0x02, 0xae, 0x68, 0x5a, 0x78, 0x04, 0x1a,
-	0xa6, 0x99, 0x10, 0xcd, 0xc3, 0x9c, 0x9f, 0x17, 0xff, 0xee, 0x85, 0x1a, 0x93, 0x08, 0xb5, 0xdf,
-	0x7d, 0xff, 0xfd, 0xa1, 0x8e, 0xe0, 0x06, 0x79, 0x3e, 0xde, 0x13, 0xc3, 0x82, 0x3f, 0x1c, 0x13,
-	0xe7, 0xf4, 0xc2, 0x4f, 0xde, 0x4c, 0x55, 0x60, 0xc7, 0x69, 0xef, 0x1c, 0x25, 0xbf, 0xbb, 0x94,
-	0xd6, 0x22, 0xed, 0x68, 0xa4, 0x07, 0xb0, 0x7b, 0x21, 0xd2, 0xd9, 0x37, 0x43, 0x8e, 0x78, 0xfc,
-	0x16, 0x7e, 0xf4, 0x40, 0xb3, 0x62, 0xb6, 0x9b, 0xa6, 0x0b, 0x00, 0x9d, 0x93, 0xb5, 0x00, 0xd0,
-	0x3d, 0x1e, 0x08, 0x6b, 0xc0, 0x36, 0xdc, 0x5c, 0x0e, 0xb0, 0xf7, 0xf8, 0x78, 0x12, 0x78, 0x27,
-	0x93, 0xc0, 0xfb, 0x35, 0x09, 0xbc, 0xf7, 0xd3, 0xa0, 0x76, 0x32, 0x0d, 0x6a, 0x3f, 0xa6, 0x41,
-	0xed, 0x45, 0x37, 0xe1, 0xea, 0xd5, 0x28, 0xc2, 0x03, 0x91, 0x39, 0xbd, 0xc6, 0xc6, 0x4d, 0x1d,
-	0x16, 0x4c, 0x46, 0x0d, 0xfd, 0x73, 0xd8, 0xf9, 0x1b, 0x00, 0x00, 0xff, 0xff, 0xd9, 0x5c, 0xc9,
-	0x11, 0xfd, 0x04, 0x00, 0x00,
+	// 605 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x95, 0xc1, 0x6f, 0x12, 0x4f,
+	0x14, 0xc7, 0x19, 0x7e, 0x2d, 0xbf, 0x74, 0x48, 0x48, 0x1c, 0x89, 0x21, 0x8b, 0x59, 0x71, 0x6b,
+	0x2a, 0xa1, 0xc9, 0x4e, 0x4b, 0x35, 0xea, 0xc1, 0x43, 0x21, 0xb6, 0x57, 0x5c, 0x3d, 0x79, 0x31,
+	0x03, 0x3b, 0x59, 0x27, 0x59, 0x76, 0xb6, 0xbb, 0x8b, 0x42, 0x48, 0x2f, 0x1e, 0xf4, 0x6a, 0xe2,
+	0xc9, 0x3f, 0xc0, 0xc4, 0xc4, 0x8b, 0x07, 0x6f, 0xfe, 0x03, 0x3d, 0x36, 0xf1, 0xe2, 0xc9, 0x18,
+	0x30, 0xf1, 0xdf, 0x30, 0xcc, 0x0c, 0x15, 0xe8, 0x40, 0xc1, 0x93, 0x97, 0xc9, 0x32, 0xf3, 0xde,
+	0xf7, 0x7d, 0xde, 0x7b, 0xf3, 0x06, 0x68, 0xb4, 0x89, 0xc7, 0x5a, 0xf1, 0x0b, 0x12, 0x62, 0xb1,
+	0x1c, 0x75, 0x68, 0xd4, 0xb3, 0xc3, 0x88, 0x27, 0x1c, 0xe5, 0xce, 0xce, 0xec, 0xd1, 0x62, 0x5c,
+	0x22, 0x6d, 0x16, 0x70, 0x2c, 0x56, 0x69, 0x62, 0xe4, 0x3d, 0xee, 0x71, 0xf1, 0x89, 0x47, 0x5f,
+	0x6a, 0xf7, 0xaa, 0xc7, 0xb9, 0xe7, 0x53, 0x4c, 0x42, 0x86, 0x49, 0x10, 0xf0, 0x84, 0x24, 0x8c,
+	0x07, 0xb1, 0x3a, 0xad, 0xb4, 0x78, 0xdc, 0xe6, 0x31, 0x6e, 0x92, 0x98, 0xca, 0x78, 0xf8, 0xf9,
+	0x6e, 0x93, 0x26, 0x64, 0x17, 0x87, 0xc4, 0x63, 0x81, 0x30, 0x56, 0xb6, 0xc5, 0x19, 0xbc, 0x90,
+	0x44, 0xa4, 0x3d, 0x16, 0xba, 0x7e, 0xfe, 0x30, 0x61, 0xc4, 0x7f, 0x1a, 0xd3, 0xc0, 0x95, 0x26,
+	0x56, 0x1e, 0xa2, 0x87, 0xa3, 0x08, 0x0d, 0xe1, 0xe7, 0xd0, 0xa3, 0x0e, 0x8d, 0x13, 0xab, 0x01,
+	0x2f, 0x4f, 0xed, 0xc6, 0x21, 0x0f, 0x62, 0x8a, 0xee, 0xc1, 0x8c, 0xd4, 0x2f, 0x80, 0x12, 0x28,
+	0x67, 0xab, 0x57, 0xec, 0xe9, 0x02, 0xd8, 0xd2, 0xbe, 0xb6, 0x71, 0xf2, 0xfd, 0x5a, 0xea, 0xc3,
+	0xaf, 0x4f, 0x15, 0xe0, 0x28, 0x07, 0xeb, 0x00, 0x1a, 0x42, 0xf1, 0x90, 0x26, 0x0d, 0x49, 0xf1,
+	0x88, 0x06, 0xae, 0x8a, 0x87, 0x0a, 0xf0, 0xff, 0x56, 0x44, 0x49, 0xc2, 0x23, 0xa1, 0xbc, 0xe1,
+	0x8c, 0x7f, 0xa2, 0x1c, 0x4c, 0x33, 0xb7, 0x90, 0x2e, 0x81, 0xf2, 0x9a, 0x93, 0x66, 0xae, 0xd5,
+	0x84, 0x45, 0xad, 0x8e, 0x22, 0xac, 0xc3, 0xec, 0xc4, 0xb6, 0xc2, 0x2c, 0x6a, 0x30, 0xc7, 0x26,
+	0xb5, 0xb5, 0x11, 0xab, 0x33, 0xe9, 0x65, 0xbd, 0x06, 0x70, 0x53, 0x13, 0xa4, 0xd6, 0xab, 0x4b,
+	0xa8, 0x8b, 0xa9, 0x0f, 0x20, 0xfc, 0xd3, 0x29, 0x41, 0x9f, 0xad, 0x6e, 0xd9, 0xb2, 0xad, 0xf6,
+	0xa8, 0xad, 0xb6, 0xbc, 0x46, 0xaa, 0xad, 0x76, 0x83, 0x78, 0x54, 0xa9, 0x3a, 0x13, 0x9e, 0xd6,
+	0x67, 0x00, 0x6f, 0x2c, 0x26, 0x99, 0x97, 0xf7, 0x7f, 0xab, 0xe7, 0x8d, 0x0e, 0x35, 0xd4, 0x37,
+	0x2f, 0xa4, 0x96, 0x04, 0x53, 0xd8, 0xae, 0x6a, 0xf6, 0xbe, 0xef, 0x6b, 0x9a, 0x3d, 0x5d, 0x1c,
+	0xf0, 0xd7, 0xc5, 0xf9, 0x08, 0xd4, 0x5d, 0x98, 0x0d, 0xf3, 0x2f, 0xd6, 0xa4, 0xfa, 0x6a, 0x1d,
+	0xae, 0x0b, 0x5a, 0xd4, 0x87, 0x19, 0x39, 0x27, 0xc8, 0x9a, 0x85, 0x39, 0x3f, 0x8a, 0xc6, 0xe6,
+	0x42, 0x1b, 0x19, 0xc8, 0x2a, 0xbf, 0xfc, 0xfa, 0xf3, 0x6d, 0xda, 0x42, 0x25, 0xfc, 0xb8, 0x5b,
+	0xe7, 0x51, 0xc8, 0x76, 0xba, 0x58, 0xfb, 0x30, 0xa0, 0xf7, 0x60, 0xaa, 0x2a, 0xa8, 0xa2, 0x95,
+	0xd7, 0x4e, 0xa9, 0xb1, 0xbd, 0x94, 0xad, 0x42, 0xba, 0x2f, 0x90, 0xee, 0xa0, 0xdb, 0x0b, 0x91,
+	0xce, 0x9e, 0x23, 0xdc, 0x57, 0xb3, 0x73, 0x8c, 0xfb, 0xcc, 0x3d, 0x46, 0x5f, 0x00, 0xcc, 0xeb,
+	0x6e, 0x3c, 0xda, 0x5b, 0x02, 0x62, 0x76, 0x52, 0x8d, 0x5b, 0xab, 0x39, 0xa9, 0x14, 0xee, 0x8a,
+	0x14, 0xaa, 0x68, 0x67, 0xd5, 0x14, 0xd0, 0x3b, 0x00, 0x73, 0x13, 0xd2, 0xfb, 0xbe, 0x3f, 0xa7,
+	0xd0, 0xda, 0x09, 0x99, 0x53, 0x68, 0xfd, 0x35, 0xb7, 0x6c, 0x41, 0x59, 0x46, 0x5b, 0xcb, 0x51,
+	0xd6, 0x1e, 0x9c, 0x0c, 0x4c, 0x70, 0x3a, 0x30, 0xc1, 0x8f, 0x81, 0x09, 0xde, 0x0c, 0xcd, 0xd4,
+	0xe9, 0xd0, 0x4c, 0x7d, 0x1b, 0x9a, 0xa9, 0x27, 0xdb, 0x1e, 0x4b, 0x9e, 0x75, 0x9a, 0x76, 0x8b,
+	0xb7, 0xb5, 0x5a, 0x5d, 0xa9, 0x96, 0xf4, 0x42, 0x1a, 0x37, 0x33, 0xe2, 0xff, 0x63, 0xef, 0x77,
+	0x00, 0x00, 0x00, 0xff, 0xff, 0x29, 0x5e, 0x3e, 0x09, 0x20, 0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -362,6 +481,8 @@ type QueryClient interface {
 	Params(ctx context.Context, in *QueryParamsRequest, opts ...grpc.CallOption) (*QueryParamsResponse, error)
 	// Queries a list of PartialSend items.
 	PartialSend(ctx context.Context, in *QueryGetPartialSendRequest, opts ...grpc.CallOption) (*QueryGetPartialSendResponse, error)
+	// Queries PartialSend items of an address.
+	PartialSendByCreator(ctx context.Context, in *QueryGetPartialSendByCreatorRequest, opts ...grpc.CallOption) (*QueryGetPartialSendByCreatorResponse, error)
 	PartialSendAll(ctx context.Context, in *QueryAllPartialSendRequest, opts ...grpc.CallOption) (*QueryAllPartialSendResponse, error)
 }
 
@@ -391,6 +512,15 @@ func (c *queryClient) PartialSend(ctx context.Context, in *QueryGetPartialSendRe
 	return out, nil
 }
 
+func (c *queryClient) PartialSendByCreator(ctx context.Context, in *QueryGetPartialSendByCreatorRequest, opts ...grpc.CallOption) (*QueryGetPartialSendByCreatorResponse, error) {
+	out := new(QueryGetPartialSendByCreatorResponse)
+	err := c.cc.Invoke(ctx, "/magicswap.swap.Query/PartialSendByCreator", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *queryClient) PartialSendAll(ctx context.Context, in *QueryAllPartialSendRequest, opts ...grpc.CallOption) (*QueryAllPartialSendResponse, error) {
 	out := new(QueryAllPartialSendResponse)
 	err := c.cc.Invoke(ctx, "/magicswap.swap.Query/PartialSendAll", in, out, opts...)
@@ -406,6 +536,8 @@ type QueryServer interface {
 	Params(context.Context, *QueryParamsRequest) (*QueryParamsResponse, error)
 	// Queries a list of PartialSend items.
 	PartialSend(context.Context, *QueryGetPartialSendRequest) (*QueryGetPartialSendResponse, error)
+	// Queries PartialSend items of an address.
+	PartialSendByCreator(context.Context, *QueryGetPartialSendByCreatorRequest) (*QueryGetPartialSendByCreatorResponse, error)
 	PartialSendAll(context.Context, *QueryAllPartialSendRequest) (*QueryAllPartialSendResponse, error)
 }
 
@@ -418,6 +550,9 @@ func (*UnimplementedQueryServer) Params(ctx context.Context, req *QueryParamsReq
 }
 func (*UnimplementedQueryServer) PartialSend(ctx context.Context, req *QueryGetPartialSendRequest) (*QueryGetPartialSendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PartialSend not implemented")
+}
+func (*UnimplementedQueryServer) PartialSendByCreator(ctx context.Context, req *QueryGetPartialSendByCreatorRequest) (*QueryGetPartialSendByCreatorResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PartialSendByCreator not implemented")
 }
 func (*UnimplementedQueryServer) PartialSendAll(ctx context.Context, req *QueryAllPartialSendRequest) (*QueryAllPartialSendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method PartialSendAll not implemented")
@@ -463,6 +598,24 @@ func _Query_PartialSend_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Query_PartialSendByCreator_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryGetPartialSendByCreatorRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(QueryServer).PartialSendByCreator(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/magicswap.swap.Query/PartialSendByCreator",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(QueryServer).PartialSendByCreator(ctx, req.(*QueryGetPartialSendByCreatorRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Query_PartialSendAll_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(QueryAllPartialSendRequest)
 	if err := dec(in); err != nil {
@@ -493,6 +646,10 @@ var _Query_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "PartialSend",
 			Handler:    _Query_PartialSend_Handler,
+		},
+		{
+			MethodName: "PartialSendByCreator",
+			Handler:    _Query_PartialSendByCreator_Handler,
 		},
 		{
 			MethodName: "PartialSendAll",
@@ -582,7 +739,14 @@ func (m *QueryGetPartialSendRequest) MarshalToSizedBuffer(dAtA []byte) (int, err
 	if m.Id != 0 {
 		i = encodeVarintQuery(dAtA, i, uint64(m.Id))
 		i--
-		dAtA[i] = 0x8
+		dAtA[i] = 0x10
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -617,6 +781,97 @@ func (m *QueryGetPartialSendResponse) MarshalToSizedBuffer(dAtA []byte) (int, er
 	}
 	i--
 	dAtA[i] = 0xa
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetPartialSendByCreatorRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetPartialSendByCreatorRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetPartialSendByCreatorRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintQuery(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *QueryGetPartialSendByCreatorResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *QueryGetPartialSendByCreatorResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *QueryGetPartialSendByCreatorResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.Pagination != nil {
+		{
+			size, err := m.Pagination.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintQuery(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.PartialSend) > 0 {
+		for iNdEx := len(m.PartialSend) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.PartialSend[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintQuery(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0xa
+		}
+	}
 	return len(dAtA) - i, nil
 }
 
@@ -741,6 +996,10 @@ func (m *QueryGetPartialSendRequest) Size() (n int) {
 	}
 	var l int
 	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
 	if m.Id != 0 {
 		n += 1 + sovQuery(uint64(m.Id))
 	}
@@ -755,6 +1014,42 @@ func (m *QueryGetPartialSendResponse) Size() (n int) {
 	_ = l
 	l = m.PartialSend.Size()
 	n += 1 + l + sovQuery(uint64(l))
+	return n
+}
+
+func (m *QueryGetPartialSendByCreatorRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
+	return n
+}
+
+func (m *QueryGetPartialSendByCreatorResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.PartialSend) > 0 {
+		for _, e := range m.PartialSend {
+			l = e.Size()
+			n += 1 + l + sovQuery(uint64(l))
+		}
+	}
+	if m.Pagination != nil {
+		l = m.Pagination.Size()
+		n += 1 + l + sovQuery(uint64(l))
+	}
 	return n
 }
 
@@ -959,6 +1254,38 @@ func (m *QueryGetPartialSendRequest) Unmarshal(dAtA []byte) error {
 		}
 		switch fieldNum {
 		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
 			if wireType != 0 {
 				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
 			}
@@ -1057,6 +1384,244 @@ func (m *QueryGetPartialSendResponse) Unmarshal(dAtA []byte) error {
 				return io.ErrUnexpectedEOF
 			}
 			if err := m.PartialSend.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetPartialSendByCreatorRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetPartialSendByCreatorRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetPartialSendByCreatorRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageRequest{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipQuery(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *QueryGetPartialSendByCreatorResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowQuery
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: QueryGetPartialSendByCreatorResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: QueryGetPartialSendByCreatorResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PartialSend", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PartialSend = append(m.PartialSend, PartialSend{})
+			if err := m.PartialSend[len(m.PartialSend)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pagination", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowQuery
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthQuery
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthQuery
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Pagination == nil {
+				m.Pagination = &query.PageResponse{}
+			}
+			if err := m.Pagination.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
 			}
 			iNdEx = postIndex
