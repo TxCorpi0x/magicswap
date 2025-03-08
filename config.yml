@@ -3,11 +3,9 @@ validation: sovereign
 accounts: 
 - name: alice
   coins:
-  - 20000token
   - 200000000stake
 - name: bob
   coins:
-  - 10000token
   - 100000000stake
 client:
   openapi:
@@ -15,7 +13,6 @@ client:
 faucet:
   name: bob
   coins:
-  - 5token
   - 100000stake
 validators:
 - name: alice
@@ -26,3 +23,16 @@ validators:
   bonded: 200000000stake
 - name: validator3
   bonded: 300000000stake
+genesis:
+  app_state:
+    swap:
+      params:
+       swap_rules:
+        - src_denom: stake
+          dst_denom: stake1
+          ratio: "0.50"
+          min_supply_ratio_limit: "0.6667"
+        - src_denom: stake1
+          dst_denom: stake
+          ratio: "0.80"
+          min_supply_ratio_limit: "0.3333"
